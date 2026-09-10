@@ -1,247 +1,30 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MaryOS · Personal Life Dashboard</title>
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-    :root { font-family: 'Plus Jakarta Sans', sans-serif; --pink-bg: #fff5f8; }
-    body { background-color: var(--pink-bg); color: #2b1120; margin: 0; padding: 0; overflow-x: hidden; }
-    .hidden { display: none !important; }
-    .nav-btn.active { background-color: #ec4899 !important; color: #ffffff !important; box-shadow: 0 8px 20px -4px rgba(236, 72, 153, 0.4); }
-    .modal-overlay { background-color: rgba(36, 5, 27, 0.65); backdrop-filter: blur(5px); z-index: 99999 !important; }
-    input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-  </style>
-</head>
-<body class="min-h-screen flex flex-col antialiased">
-
-  <div class="flex-1 flex w-full relative">
-    <main class="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-6 lg:p-8">
-
-      <!-- PANE 3: FITNESS (CORREGIDO) -->
-      <section id="pane-fitness" class="tab-pane space-y-6">
-        <div class="bg-gradient-to-br from-white via-pink-50/50 to-white border-2 border-pink-200 rounded-3xl p-6 sm:p-7 shadow-sm space-y-6">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-pink-100">
-            <div>
-              <h2 class="text-xl font-black text-[#2b1120]">Control de Peso, Pasos & Fotos</h2>
-              <p class="text-xs text-[#9d738a] mt-0.5">Con notas (menstruación, etc.), edición y borrado</p>
-            </div>
-            <div class="flex items-center gap-2">
-              <button onclick="openModalWeight()" class="px-4 py-2 bg-[#ec4899] hover:bg-[#db2777] text-white font-extrabold text-xs rounded-2xl shadow-md transition cursor-pointer">+ Registrar Peso</button>
-              <button onclick="openModalProgressPhoto()" class="px-4 py-2 bg-white border border-pink-200 text-[#db2777] font-extrabold text-xs rounded-2xl hover:bg-pink-50 transition cursor-pointer">📸 Subir Foto</button>
-            </div>
-          </div>
-
-          <div class="bg-white border border-pink-100 rounded-3xl p-6 shadow-sm">
-            <h4 class="text-xs font-black text-[#2b1120] uppercase tracking-wider mb-4">Gráfica de Tendencia de Peso Corporal</h4>
-            <div class="h-56 w-full"><canvas id="weightTrendChart"></canvas></div>
-          </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="bg-white border border-pink-100 rounded-2xl p-4 shadow-xs">
-              <h4 class="text-xs font-black text-[#2b1120] uppercase tracking-wider mb-3">Historial de Pesajes</h4>
-              <div id="weight-history-list" class="space-y-2 max-h-48 overflow-y-auto pr-1"></div>
-            </div>
-            <div class="bg-white border border-pink-100 rounded-2xl p-4 shadow-xs">
-              <h4 class="text-xs font-black text-[#2b1120] uppercase tracking-wider mb-3">Bóveda de Fotos</h4>
-              <div id="progress-photos-gallery" class="grid grid-cols-3 gap-2 max-h-48 overflow-y-auto pr-1"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-white border border-pink-subtle rounded-3xl p-6 shadow-sm">
-          <div class="flex items-center justify-between pb-4 border-b border-pink-100">
-            <h2 class="text-xl font-black text-[#2b1120]">Nutrición, Pasos, Cardio & Fuerza</h2>
-            <div class="flex items-center gap-2">
-              <button onclick="openModalNutrition()" class="px-3 py-1.5 bg-pink-100 text-[#db2777] rounded-xl text-xs font-bold cursor-pointer">🥗 Nutrición & Pasos</button>
-              <button onclick="openModalCardio()" class="px-3 py-1.5 bg-purple-100 text-purple-800 rounded-xl text-xs font-bold cursor-pointer">🏃‍♀️ Cardio</button>
-              <button onclick="openModalStrength()" class="px-3.5 py-1.5 bg-[#ec4899] text-white rounded-xl text-xs font-bold cursor-pointer">+ Fuerza</button>
-            </div>
-          </div>
-          <div class="mt-6 space-y-6">
-            <div>
-              <h3 class="text-sm font-black text-[#2b1120] mb-3">Sesiones de Fuerza (Con Frecuencia Promedio)</h3>
-              <div id="fitness-strength-logs" class="space-y-2"></div>
-              <p id="fitness-strength-empty" class="text-xs text-[#9d738a] text-center py-4">Sin entrenamientos de fuerza.</p>
-            </div>
-            <div class="pt-4 border-t border-pink-100">
-              <h3 class="text-sm font-black text-[#2b1120] mb-3">Historial de Cardio y Calorías en Vivo</h3>
-              <div id="fitness-cardio-logs" class="space-y-2"></div>
-              <p id="fitness-cardio-empty" class="text-xs text-[#9d738a] text-center py-4">Sin registros de cardio.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </main>
-  </div>
-
-  <!-- MODAL PESO CORREGIDO (SIN EL CAMPO DE TIPO DE CARGA) -->
-  <div id="modal-weight" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
-    <div class="bg-white border border-pink-subtle rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4">
-      <div class="flex items-center justify-between pb-2 border-b border-pink-100">
-        <h3 class="text-base font-black text-[#2b1120]">Registrar Peso</h3>
-        <button onclick="closeModal('modal-weight')" class="text-gray-400 font-bold cursor-pointer">✕</button>
+<!-- MODAL NUTRICIÓN CORREGIDO CON TUS TÉRMINOS EXACTOS -->
+<div id="modal-nutrition" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
+  <div class="bg-white border border-pink-subtle rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4">
+    <div class="flex items-center justify-between pb-2 border-b border-pink-100">
+      <h3 class="text-base font-black text-[#2b1120]">Nutrición, Pasos & Macros</h3>
+      <button onclick="closeModal('modal-nutrition')" class="text-gray-400 font-bold cursor-pointer">✕</button>
+    </div>
+    <div class="space-y-3 text-xs">
+      <input type="date" id="nutrition-date" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-3 py-2 font-bold">
+      <div class="grid grid-cols-2 gap-2">
+        <input type="number" id="nutrition-calories" placeholder="Calorías (kcal)" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-3 py-2 font-black">
+        <input type="number" id="nutrition-steps" placeholder="Pasos diarios" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-3 py-2 font-bold">
       </div>
-      <div class="space-y-3 text-xs">
-        <input type="date" id="weight-input-date" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-3 py-2 font-bold">
-        <div class="grid grid-cols-2 gap-2">
-          <input type="number" step="0.05" id="weight-input-val" placeholder="Peso" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-3 py-2 font-black">
-          <select id="weight-input-unit" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-3 py-2 font-bold">
-            <option value="kg">kg</option>
-            <option value="lbs">lbs</option>
-          </select>
-        </div>
-        <input type="text" id="weight-input-note" placeholder="Nota (ej. menstruación, etc.)" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-3 py-2 font-bold">
+      <div class="grid grid-cols-3 gap-2">
+        <input type="number" id="nutrition-protein" placeholder="Prot (g)" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold text-center">
+        <input type="number" id="nutrition-carbs" placeholder="Carb (g)" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold text-center">
+        <input type="number" id="nutrition-fat" placeholder="Grasa (g)" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold text-center">
       </div>
-      <div class="pt-2 flex justify-end space-x-2">
-        <button onclick="closeModal('modal-weight')" class="px-4 py-2 border rounded-xl text-xs font-bold cursor-pointer">Cancelar</button>
-        <button onclick="saveWeightLog()" class="px-4 py-2 bg-[#ec4899] text-white rounded-xl text-xs font-black cursor-pointer">Guardar</button>
+      <div class="grid grid-cols-2 gap-2">
+        <input type="number" id="nutrition-act-cal" placeholder="Energía de actividad" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold">
+        <input type="number" id="nutrition-rest-cal" placeholder="Energía de reposo" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold">
       </div>
+      <input type="number" step="0.1" id="nutrition-water" placeholder="Agua (L)" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-3 py-2 font-bold">
+    </div>
+    <div class="pt-2 flex justify-end space-x-2">
+      <button onclick="closeModal('modal-nutrition')" class="px-4 py-2 border rounded-xl text-xs font-bold cursor-pointer">Cancelar</button>
+      <button onclick="saveNutritionData()" class="px-4 py-2 bg-[#ec4899] text-white rounded-xl text-xs font-black cursor-pointer">Guardar</button>
     </div>
   </div>
-
-  <!-- MODAL FUERZA CORREGIDO (CON OPCIÓN DE TIPO DE CARGA POR SERIE: KG, LBS, CORPORAL, LIBRE) -->
-  <div id="modal-strength" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
-    <div class="bg-white border border-pink-subtle rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between pb-2 border-b border-pink-100">
-        <h3 class="text-base font-black text-[#2b1120]">Registrar Fuerza</h3>
-        <button onclick="closeModal('modal-strength')" class="text-gray-400 font-bold cursor-pointer">✕</button>
-      </div>
-      <div class="space-y-3 text-xs">
-        <div class="grid grid-cols-2 gap-2">
-          <input type="date" id="strength-date" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-3 py-2 font-bold">
-          <select id="strength-split" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-3 py-2 font-bold">
-            <option value="Push">Push</option><option value="Pull">Pull</option><option value="Pierna">Pierna</option><option value="Fullbody">Fullbody</option>
-          </select>
-        </div>
-        <input type="text" id="strength-name" placeholder="Ejercicio (ej. Sentadilla)" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-3 py-2 font-bold">
-        <div class="grid grid-cols-3 gap-2">
-          <input type="number" id="strength-duration" placeholder="Minutos" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold">
-          <input type="number" id="strength-calories" placeholder="Calorías" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold">
-          <input type="text" id="strength-frequency" placeholder="Frecuencia prom" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold">
-        </div>
-        <div id="strength-sets-list" class="space-y-1.5">
-          <div class="flex items-center space-x-2 set-row">
-            <span class="text-[10px] font-bold text-gray-400 w-12">Serie 1</span>
-            <select class="set-load-type bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold text-xs">
-              <option value="kg">kg</option>
-              <option value="lbs">lbs</option>
-              <option value="Corporal">Corporal</option>
-              <option value="Sin peso / Libre">Sin peso</option>
-            </select>
-            <input type="number" step="0.5" placeholder="Cant." class="set-weight w-16 bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold text-center">
-            <span>×</span>
-            <input type="number" placeholder="reps" class="set-reps w-16 bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold text-center">
-          </div>
-        </div>
-        <button onclick="addSetRowToModal()" type="button" class="text-[11px] text-[#ec4899] font-extrabold cursor-pointer">+ Añadir serie</button>
-      </div>
-      <div class="pt-2 flex justify-end space-x-2">
-        <button onclick="closeModal('modal-strength')" class="px-4 py-2 border rounded-xl text-xs font-bold cursor-pointer">Cancelar</button>
-        <button onclick="saveStrengthExercise()" class="px-4 py-2 bg-[#ec4899] text-white rounded-xl text-xs font-black cursor-pointer">Guardar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL NUTRICIÓN RESTAURADO (CON CALORÍAS ACTIVAS, REPOSO Y AGUA) -->
-  <div id="modal-nutrition" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
-    <div class="bg-white border border-pink-subtle rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4">
-      <div class="flex items-center justify-between pb-2 border-b border-pink-100">
-        <h3 class="text-base font-black text-[#2b1120]">Nutrición, Pasos & Macros</h3>
-        <button onclick="closeModal('modal-nutrition')" class="text-gray-400 font-bold cursor-pointer">✕</button>
-      </div>
-      <div class="space-y-3 text-xs">
-        <input type="date" id="nutrition-date" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-3 py-2 font-bold">
-        <div class="grid grid-cols-2 gap-2">
-          <input type="number" id="nutrition-calories" placeholder="Calorías (kcal)" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-3 py-2 font-black">
-          <input type="number" id="nutrition-steps" placeholder="Pasos diarios" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-3 py-2 font-bold">
-        </div>
-        <div class="grid grid-cols-3 gap-2">
-          <input type="number" id="nutrition-protein" placeholder="Prot (g)" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold text-center">
-          <input type="number" id="nutrition-carbs" placeholder="Carb (g)" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold text-center">
-          <input type="number" id="nutrition-fat" placeholder="Grasa (g)" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold text-center">
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-          <input type="number" id="nutrition-act-cal" placeholder="Cal. Activas" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold">
-          <input type="number" id="nutrition-rest-cal" placeholder="Cal. Reposo (BMR)" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold">
-        </div>
-        <input type="number" step="0.1" id="nutrition-water" placeholder="Agua (L)" class="w-full bg-[#fff1f6] border border-pink-200 rounded-xl px-3 py-2 font-bold">
-      </div>
-      <div class="pt-2 flex justify-end space-x-2">
-        <button onclick="closeModal('modal-nutrition')" class="px-4 py-2 border rounded-xl text-xs font-bold cursor-pointer">Cancelar</button>
-        <button onclick="saveNutritionData()" class="px-4 py-2 bg-[#ec4899] text-white rounded-xl text-xs font-black cursor-pointer">Guardar</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    let appData = { weightLogs: [], strengthExercises: [], cardioSessions: [], dailyNutrition: [], progressPhotos: [] };
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    function showToast(msg) { console.log(msg); }
-
-    function openModalWeight() { openModal('modal-weight'); }
-    function saveWeightLog() {
-      const weight = parseFloat(document.getElementById('weight-input-val').value || 0);
-      const unit = document.getElementById('weight-input-unit').value;
-      const note = document.getElementById('weight-input-note').value;
-      appData.weightLogs.push({ id: Date.now(), date: new Date().toLocaleDateString(), weight, unit, note });
-      closeModal('modal-weight'); renderFitnessView();
-    }
-    function deleteWeightLog(id) { appData.weightLogs = appData.weightLogs.filter(w => w.id !== id); renderFitnessView(); }
-
-    function openModalStrength() { openModal('modal-strength'); }
-    function addSetRowToModal() {
-      const list = document.getElementById('strength-sets-list');
-      const count = list.querySelectorAll('.set-row').length + 1;
-      list.innerHTML += `
-        <div class="flex items-center space-x-2 set-row">
-          <span class="text-[10px] font-bold text-gray-400 w-12">Serie ${count}</span>
-          <select class="set-load-type bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold text-xs">
-            <option value="kg">kg</option><option value="lbs">lbs</option><option value="Corporal">Corporal</option><option value="Sin peso / Libre">Sin peso</option>
-          </select>
-          <input type="number" step="0.5" placeholder="Cant." class="set-weight w-16 bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold text-center">
-          <span>×</span>
-          <input type="number" placeholder="reps" class="set-reps w-16 bg-[#fff1f6] border border-pink-200 rounded-xl px-2 py-1.5 font-bold text-center">
-        </div>`;
-    }
-    function saveStrengthExercise() {
-      const name = document.getElementById('strength-name').value || 'Ejercicio';
-      const frequency = document.getElementById('strength-frequency').value || 'N/A';
-      const rows = document.querySelectorAll('#strength-sets-list .set-row');
-      const sets = [];
-      rows.forEach(r => {
-        const loadType = r.querySelector('.set-load-type').value;
-        const w = parseFloat(r.querySelector('.set-weight').value || 0);
-        const rep = parseInt(r.querySelector('.set-reps').value || 0);
-        sets.push({ loadType, weight: w, reps: rep });
-      });
-      appData.strengthExercises.push({ id: Date.now(), date: new Date().toLocaleDateString(), split: 'Push', name, frequency, sets });
-      closeModal('modal-strength'); renderFitnessView();
-    }
-    function deleteStrengthExercise(id) { appData.strengthExercises = appData.strengthExercises.filter(s => s.id !== id); renderFitnessView(); }
-
-    function openModalNutrition() { openModal('modal-nutrition'); }
-    function saveNutritionData() { closeModal('modal-nutrition'); }
-
-    function renderFitnessView() {
-      const wList = document.getElementById('weight-history-list');
-      wList.innerHTML = appData.weightLogs.map(w => `<div class="flex justify-between text-xs p-2 bg-pink-50 rounded-xl"><span>${w.date}: ${w.weight} ${w.unit} ${w.note ? '— ' + w.note : ''}</span><button onclick="deleteWeightLog(${w.id})">✕</button></div>`).join('') || 'Sin registros.';
-      
-      const fList = document.getElementById('fitness-strength-logs');
-      fList.innerHTML = appData.strengthExercises.map(st => `<div class="p-3 bg-pink-50 rounded-2xl text-xs flex justify-between"><span><strong>${st.name}</strong> (Frec: ${st.frequency})</span><button onclick="deleteStrengthExercise(${st.id})">✕</button></div>`).join('') || 'Sin fuerza.';
-    }
-    renderFitnessView();
-  </script>
-</body>
-</html>
+</div>
