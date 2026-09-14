@@ -22,7 +22,7 @@
       --mint-frost: #D6E9DC;
       --vanilla-whip: #FFF9F4;
       --lavender-mist: #C6B7CC;
-      --poker-purple: #4E3E52; /* Morado elegante para barra superior */
+      --poker-purple: #4E3E52;
     }
 
     * { box-sizing: border-box; font-family: var(--font-main); }
@@ -528,7 +528,7 @@
       isCloudReady = true;
     } catch (e) { console.warn("Firebase:", e); }
 
-    const STORAGE_KEY = 'MAPKR_POKER_DATA_V8';
+    const STORAGE_KEY = 'MAPKR_POKER_DATA_V9';
 
     let appData = {
       grindSessions: [],
@@ -826,7 +826,7 @@
         title,
         initial: document.getElementById('leak-initial').value,
         action: document.getElementById('leak-action').value,
-        progress: [{ date: currentDate, stat: document.getElementById('leak-initial'].value }]
+        progress: [{ date: currentDate, stat: document.getElementById('leak-initial').value }]
       };
       appData.leaks.push(leak);
       saveDatabase(); closeModal('modal-leak'); renderAllViews(); showToast('Leak creado');
@@ -936,7 +936,6 @@
       `;
     }
 
-    // CALCULAR PROGRESO AUTOMÁTICO SEGÚN FRECUENCIA Y MÉTRICA
     function renderCustomGoalsAutoProgress() {
       const container = document.getElementById('custom-goals-container');
       const empty = document.getElementById('custom-goals-empty');
@@ -950,7 +949,6 @@
       appData.customGoals.forEach(g => {
         let accumulated = 0;
 
-        // Filtrar sesiones según la frecuencia
         appData.grindSessions.forEach(s => {
           const sDate = new Date(s.date + 'T00:00:00');
           let inRange = false;
@@ -958,7 +956,6 @@
           if (g.frequency === 'Diaria') {
             inRange = (s.date === currentDate);
           } else if (g.frequency === 'Semanal') {
-            // Misma semana (últimos 7 días hasta currentDate)
             const diffTime = currDate - sDate;
             const diffDays = diffTime / (1000 * 60 * 60 * 24);
             inRange = (diffDays >= 0 && diffDays < 7);
@@ -974,7 +971,7 @@
             if (g.metricType === 'grind_hours') accumulated += (s.hours || 0);
             else if (g.metricType === 'study_hours') accumulated += (s.studyHours || 0);
             else if (g.metricType === 'games') accumulated += (s.games || 0);
-            else if (g.metricType === 'custom') accumulated += 1; // Cuenta días cumplidos con sesión
+            else if (g.metricType === 'custom') accumulated += 1;
           }
         });
 
@@ -1143,7 +1140,7 @@
               <div class="flex flex-wrap gap-2">${progHtml}</div>
             </div>
             <div class="flex justify-between items-center pt-2">
-              <button onclick="openModalLeakProgress(${leak.id})" class="px-3 py-1.5 bg-[#F7F9E0] text-[#4A3E52] rounded-xl text-xs font-bold">+ Registrar Medición</button>
+              <button onclick="openModalLeakProgress(${leak.id})" class="px-3 py-1.5 bg-[#F7D9E0] text-[#4A3E52] rounded-xl text-xs font-bold">+ Registrar Medición</button>
             </div>
           </div>`;
       });
