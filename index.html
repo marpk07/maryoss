@@ -22,36 +22,36 @@
       --mint-frost: #D6E9DC;
       --vanilla-whip: #FFF9F4;
       --lavender-mist: #C6B7CC;
-      --poker-dark: #3b3238;
+      --poker-purple: #4E3E52; /* Morado elegante para barra superior */
     }
 
     * { box-sizing: border-box; font-family: var(--font-main); }
-    body { background-color: var(--vanilla-whip); color: var(--poker-dark); margin: 0; padding: 0; overflow-x: hidden; }
+    body { background-color: var(--vanilla-whip); color: #3b3238; margin: 0; padding: 0; overflow-x: hidden; }
     .hidden { display: none !important; }
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: var(--blush-cream); }
     ::-webkit-scrollbar-thumb { background: var(--lavender-mist); border-radius: 999px; }
     .border-poker { border: 1px solid #e8d7d9; }
     .nav-btn { transition: all 0.2s ease; cursor: pointer; }
-    .nav-btn.active { background-color: var(--soft-rose) !important; color: #5a3d44 !important; font-weight: 800; box-shadow: 0 4px 12px rgba(247, 217, 224, 0.6); }
-    .modal-overlay { background-color: rgba(59, 50, 56, 0.6); backdrop-filter: blur(4px); z-index: 99999 !important; }
+    .nav-btn.active { background-color: var(--soft-rose) !important; color: #4A3E52 !important; font-weight: 800; box-shadow: 0 4px 12px rgba(247, 217, 224, 0.6); }
+    .modal-overlay { background-color: rgba(78, 62, 82, 0.6); backdrop-filter: blur(4px); z-index: 99999 !important; }
     input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-[#F7D9E0] selection:text-[#5a3d44]">
+<body class="min-h-screen flex flex-col antialiased selection:bg-[#F7D9E0] selection:text-[#4A3E52]">
 
   <!-- HEADER & TOP NAVIGATION -->
-  <header class="bg-[#3b3235] text-white sticky top-0 z-40 shadow-md">
+  <header class="bg-[#4E3E52] text-white sticky top-0 z-40 shadow-md">
     <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#F7D9E0] to-[#C6B7CC] flex items-center justify-center font-black text-[#3b3235] text-base shadow-lg">MK</div>
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#F7D9E0] to-[#C6B7CC] flex items-center justify-center font-black text-[#4E3E52] text-base shadow-lg">MK</div>
         <div>
           <h1 class="text-base font-black tracking-wider uppercase text-white leading-none">MAPKR</h1>
           <span class="text-[10px] font-bold text-[#F7D9E0] tracking-widest uppercase">Professional Poker Performance</span>
         </div>
       </div>
 
-      <nav class="flex flex-wrap items-center justify-center gap-1.5 bg-[#4c4046] p-1.5 rounded-2xl border border-[#5e5057]">
+      <nav class="flex flex-wrap items-center justify-center gap-1.5 bg-[#5D4B63] p-1.5 rounded-2xl border border-[#6F5C75]">
         <button onclick="switchTab('resumen')" id="tab-btn-resumen" class="nav-btn active px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-200 hover:text-white">📊 Resumen & Ritual</button>
         <button onclick="switchTab('grind')" id="tab-btn-grind" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-200 hover:text-white">🃏 Sesiones</button>
         <button onclick="switchTab('estudio')" id="tab-btn-estudio" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-200 hover:text-white">📚 Estudio & Manos</button>
@@ -62,7 +62,7 @@
 
       <div class="flex items-center space-x-2">
         <span id="cloud-badge" class="text-[9px] font-extrabold px-2.5 py-1 rounded-full bg-[#D6E9DC] text-[#2c4c37] border border-[#b2d9be]">☁️ Sincronizado</span>
-        <button onclick="downloadBackup()" class="p-2 rounded-xl bg-[#4c4046] text-stone-200 hover:text-white text-xs font-bold border border-[#5e5057]" title="Backup JSON">💾</button>
+        <button onclick="downloadBackup()" class="p-2 rounded-xl bg-[#5D4B63] text-stone-200 hover:text-white text-xs font-bold border border-[#6F5C75]" title="Backup JSON">💾</button>
       </div>
     </div>
   </header>
@@ -77,36 +77,36 @@
         <input type="date" id="global-date" onchange="handleGlobalDateChange(this.value)" class="bg-[#FFF9F4] border border-[#F7D9E0] rounded-xl px-3 py-1.5 text-xs font-black text-stone-800 focus:outline-none">
       </div>
       <div class="flex items-center gap-2">
-        <button onclick="openModalGrind()" class="px-4 py-2 bg-[#F7D9E0] hover:bg-[#f0c5d0] text-[#4a3238] font-extrabold text-xs rounded-xl shadow-sm transition cursor-pointer">+ Registrar / Editar Sesión Completa</button>
+        <button onclick="openModalGrind()" class="px-4 py-2 bg-[#F7D9E0] hover:bg-[#f0c5d0] text-[#4A3E52] font-extrabold text-xs rounded-xl shadow-sm transition cursor-pointer">+ Registrar / Editar Sesión Completa</button>
       </div>
     </div>
 
     <!-- PANE 1: RESUMEN & RITUAL -->
     <section id="pane-resumen" class="tab-pane space-y-6">
       
-      <!-- ESTADO DE METAS DE PÓKER (DIARIAS, SEMANALES, MENSUALES CON BARRAS) -->
+      <!-- ESTADO DE METAS DE PÓKER -->
       <div class="bg-white border-poker rounded-3xl p-6 shadow-sm space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-stone-100">
           <div>
             <h3 class="text-base font-black text-stone-800">🎯 Metas Principales de Póker</h3>
-            <p class="text-xs text-stone-500">Progreso en tiempo real con barras acumuladas</p>
+            <p class="text-xs text-stone-500">Progreso automático en tiempo real</p>
           </div>
-          <button onclick="openModalGoalsConfig()" class="text-xs font-extrabold text-[#7a5b65] hover:underline cursor-pointer">⚙️ Configurar Metas</button>
+          <button onclick="openModalGoalsConfig()" class="text-xs font-extrabold text-[#7a5b65] hover:underline cursor-pointer">⚙️ Configurar Metas Base</button>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="daily-goals-progress"></div>
       </div>
 
-      <!-- GESTOR DE METAS PERSONALIZADAS Y HÁBITOS TIPO TRACKER (L-M-X-J-V-S-D) -->
+      <!-- GESTOR DE METAS Y HÁBITOS CON PROGRESO AUTOMÁTICO -->
       <div class="bg-white border-poker rounded-3xl p-6 shadow-sm space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-stone-100">
           <div>
-            <h3 class="text-base font-black text-stone-800">✨ Hábitos & Metas Personales (Tracker Semanal)</h3>
-            <p class="text-xs text-stone-500">Marca tu cumplimiento día a día</p>
+            <h3 class="text-base font-black text-stone-800">✨ Metas & Hábitos (Progreso Automático)</h3>
+            <p class="text-xs text-stone-500">Controla tus objetivos de estudio, grind, games o desarrollo personal</p>
           </div>
-          <button onclick="openModalCustomGoal()" class="px-4 py-2 bg-[#F7D9E0] hover:bg-[#f0c5d0] text-[#4a3238] font-bold text-xs rounded-xl shadow-sm cursor-pointer">+ Añadir Hábito / Meta</button>
+          <button onclick="openModalCustomGoal()" class="px-4 py-2 bg-[#F7D9E0] hover:bg-[#f0c5d0] text-[#4A3E52] font-bold text-xs rounded-xl shadow-sm cursor-pointer">+ Añadir Meta o Hábito</button>
         </div>
-        <div class="space-y-3" id="custom-goals-container"></div>
-        <p id="custom-goals-empty" class="text-xs text-stone-400 text-center py-4">No hay metas personales creadas aún.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="custom-goals-container"></div>
+        <p id="custom-goals-empty" class="text-xs text-stone-400 text-center py-4">No hay metas o hábitos creados aún.</p>
       </div>
 
       <!-- VISTA DEL RITUAL DE LA FECHA SELECCIONADA -->
@@ -120,7 +120,7 @@
           <h2 class="text-xl font-black text-stone-800">Historial de Sesiones & Gráficas</h2>
           <p class="text-xs text-stone-500 mt-0.5">Todas tus jornadas registradas con sus capturas</p>
         </div>
-        <button onclick="openModalGrind()" class="px-4 py-2 bg-[#F7D9E0] text-[#4a3238] font-extrabold text-xs rounded-xl shadow-sm cursor-pointer">+ Nueva Sesión</button>
+        <button onclick="openModalGrind()" class="px-4 py-2 bg-[#F7D9E0] text-[#4A3E52] font-extrabold text-xs rounded-xl shadow-sm cursor-pointer">+ Nueva Sesión</button>
       </div>
 
       <div class="bg-white border-poker rounded-3xl p-6 shadow-sm">
@@ -136,7 +136,7 @@
           <h2 class="text-xl font-black text-stone-800">Bitácora de Estudio & Manos Marcadas</h2>
           <p class="text-xs text-stone-500">Tus revisiones en GTO Wizard / Solvers</p>
         </div>
-        <button onclick="openModalStudy()" class="px-4 py-2 bg-[#F7D9E0] text-[#4a3238] font-extrabold text-xs rounded-xl shadow-sm cursor-pointer">+ Nueva Entrada de Estudio</button>
+        <button onclick="openModalStudy()" class="px-4 py-2 bg-[#F7D9E0] text-[#4A3E52] font-extrabold text-xs rounded-xl shadow-sm cursor-pointer">+ Nueva Entrada de Estudio</button>
       </div>
 
       <div class="bg-white border-poker rounded-3xl p-6 shadow-sm">
@@ -152,7 +152,7 @@
           <h2 class="text-xl font-black text-stone-800">Tracker de Leaks & Correcciones</h2>
           <p class="text-xs text-stone-500">Audita tus estadísticas y evalúa tu progreso numérico</p>
         </div>
-        <button onclick="openModalLeak()" class="px-4 py-2 bg-[#F7D9E0] text-[#4a3238] font-extrabold text-xs rounded-xl shadow-sm cursor-pointer">+ Nuevo Leak a Corregir</button>
+        <button onclick="openModalLeak()" class="px-4 py-2 bg-[#F7D9E0] text-[#4A3E52] font-extrabold text-xs rounded-xl shadow-sm cursor-pointer">+ Nuevo Leak a Corregir</button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="leaks-container"></div>
@@ -166,7 +166,7 @@
           <h2 class="text-xl font-black text-stone-800">Control de Tridents & Extras</h2>
           <p class="text-xs text-stone-500">Audita la rentabilidad de formatos especiales</p>
         </div>
-        <button onclick="openModalTrident()" class="px-4 py-2 bg-[#F7D9E0] text-[#4a3238] font-extrabold text-xs rounded-xl shadow-sm cursor-pointer">+ Registrar Tridents</button>
+        <button onclick="openModalTrident()" class="px-4 py-2 bg-[#F7D9E0] text-[#4A3E52] font-extrabold text-xs rounded-xl shadow-sm cursor-pointer">+ Registrar Tridents</button>
       </div>
 
       <div class="bg-white border-poker rounded-3xl p-6 shadow-sm">
@@ -183,7 +183,7 @@
             <h2 class="text-xl font-black text-stone-800">Panel de Métricas & Bóveda de Gráficas</h2>
             <p class="text-xs text-stone-500">Filtra tus números o guarda tus gráficas semanales y mensuales</p>
           </div>
-          <button onclick="copyWeeklyReport()" class="px-4 py-2 bg-[#3b3235] text-white font-bold text-xs rounded-xl shadow-sm hover:bg-[#4c4046] cursor-pointer">📋 Copiar Reporte General</button>
+          <button onclick="copyWeeklyReport()" class="px-4 py-2 bg-[#4E3E52] text-white font-bold text-xs rounded-xl shadow-sm hover:bg-[#5D4B63] cursor-pointer">📋 Copiar Reporte General</button>
         </div>
 
         <div class="flex flex-wrap items-center gap-3 bg-[#FDEEF1] p-4 rounded-2xl border border-[#f5d5dc]">
@@ -195,7 +195,7 @@
             <span class="text-xs font-bold text-stone-600">Hasta:</span>
             <input type="date" id="report-to" class="bg-white border border-[#F7D9E0] rounded-xl px-3 py-1.5 text-xs font-bold">
           </div>
-          <button onclick="applyReportFilters()" class="px-5 py-2 bg-[#F7D9E0] hover:bg-[#f0c5d0] text-[#4a3238] font-extrabold text-xs rounded-xl shadow-sm cursor-pointer">🔍 Filtrar</button>
+          <button onclick="applyReportFilters()" class="px-5 py-2 bg-[#F7D9E0] hover:bg-[#f0c5d0] text-[#4A3E52] font-extrabold text-xs rounded-xl shadow-sm cursor-pointer">🔍 Filtrar</button>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
@@ -220,7 +220,7 @@
         <div class="pt-6 border-t border-stone-100 space-y-4">
           <div class="flex justify-between items-center">
             <h3 class="text-base font-black text-stone-800">📈 Bóveda de Gráficas (Semanal / Mensual)</h3>
-            <button onclick="openModalPeriodicPhoto()" class="px-4 py-2 bg-[#F7D9E0] hover:bg-[#f0c5d0] text-[#4a3238] font-bold text-xs rounded-xl shadow-sm cursor-pointer">+ Subir Gráfica Periódica</button>
+            <button onclick="openModalPeriodicPhoto()" class="px-4 py-2 bg-[#F7D9E0] hover:bg-[#f0c5d0] text-[#4A3E52] font-bold text-xs rounded-xl shadow-sm cursor-pointer">+ Subir Gráfica Periódica</button>
           </div>
           <div id="periodic-photos-gallery" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
           <p id="periodic-photos-empty" class="text-xs text-stone-400 text-center py-4">No hay gráficas semanales o mensuales adjuntas.</p>
@@ -246,36 +246,51 @@
       </div>
       <div class="pt-2 flex justify-end space-x-2">
         <button onclick="closeModal('modal-goals-config')" class="px-4 py-2 border rounded-xl text-xs font-bold cursor-pointer">Cancelar</button>
-        <button onclick="saveGoalsConfig()" class="px-4 py-2 bg-[#F7D9E0] text-[#4a3238] rounded-xl text-xs font-black cursor-pointer">Guardar</button>
+        <button onclick="saveGoalsConfig()" class="px-4 py-2 bg-[#F7D9E0] text-[#4A3E52] rounded-xl text-xs font-black cursor-pointer">Guardar</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL CREAR META PERSONALIZADA / HÁBITO -->
+  <!-- MODAL AÑADIR META O HÁBITO ESTRUCTURADO -->
   <div id="modal-custom-goal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
-    <div class="bg-white border-poker rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4">
+    <div class="bg-white border-poker rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
       <div class="flex items-center justify-between pb-2 border-b border-stone-100">
-        <h3 class="text-base font-black text-stone-800">✨ Nuevo Hábito o Meta</h3>
+        <h3 class="text-base font-black text-stone-800">✨ Añadir Meta o Hábito</h3>
         <button onclick="closeModal('modal-custom-goal')" class="text-stone-400 font-bold cursor-pointer">✕</button>
       </div>
       <div class="space-y-3 text-xs">
         <div>
-          <label class="font-bold text-stone-500 block mb-1">Título (ej. Leer 15 páginas)</label>
-          <input type="text" id="cg-title" placeholder="¿Qué vas a lograr?" class="w-full bg-[#FFF9F4] border border-stone-200 rounded-xl px-3 py-2 font-bold">
+          <label class="font-bold text-stone-500 block mb-1">Título de la Meta / Hábito</label>
+          <input type="text" id="cg-title" placeholder="Ej. Meta Semanal de Grind" class="w-full bg-[#FFF9F4] border border-stone-200 rounded-xl px-3 py-2 font-bold">
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="font-bold text-stone-500 block mb-1">Tipo de Métrica</label>
+            <select id="cg-type" class="w-full bg-[#FFF9F4] border border-stone-200 rounded-xl px-3 py-2 font-bold">
+              <option value="grind_hours">⏱️ Horas de Grind</option>
+              <option value="study_hours">📚 Horas de Estudio</option>
+              <option value="games">🎮 Total Games</option>
+              <option value="custom">✍️ Hábito / Otro Libre</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-bold text-stone-500 block mb-1">Frecuencia</label>
+            <select id="cg-freq" class="w-full bg-[#FFF9F4] border border-stone-200 rounded-xl px-3 py-2 font-bold">
+              <option value="Diaria">Diaria</option>
+              <option value="Semanal">Semanal</option>
+              <option value="Quincenal">Quincenal</option>
+              <option value="Mensual">Mensual</option>
+            </select>
+          </div>
         </div>
         <div>
-          <label class="font-bold text-stone-500 block mb-1">Frecuencia</label>
-          <select id="cg-freq" class="w-full bg-[#FFF9F4] border border-stone-200 rounded-xl px-3 py-2 font-bold">
-            <option value="Diaria">Diaria</option>
-            <option value="Semanal">Semanal</option>
-            <option value="Quincenal">Quincenal</option>
-            <option value="Mensual">Mensual</option>
-          </select>
+          <label class="font-bold text-stone-500 block mb-1">Valor Objetivo (Meta numérica o 1 para hábito)</label>
+          <input type="number" step="0.5" id="cg-target" placeholder="Ej. 30" class="w-full bg-[#FFF9F4] border border-stone-200 rounded-xl px-3 py-2 font-bold">
         </div>
       </div>
       <div class="pt-2 flex justify-end space-x-2">
         <button onclick="closeModal('modal-custom-goal')" class="px-4 py-2 border rounded-xl text-xs font-bold cursor-pointer">Cancelar</button>
-        <button onclick="saveCustomGoal()" class="px-4 py-2 bg-[#F7D9E0] text-[#4a3238] rounded-xl text-xs font-black cursor-pointer">Crear Hábito</button>
+        <button onclick="saveCustomGoal()" class="px-4 py-2 bg-[#F7D9E0] text-[#4A3E52] rounded-xl text-xs font-black cursor-pointer">Crear Meta</button>
       </div>
     </div>
   </div>
@@ -381,7 +396,7 @@
       </div>
       <div class="pt-2 flex justify-end space-x-2">
         <button onclick="closeModal('modal-grind')" class="px-4 py-2 border rounded-xl text-xs font-bold cursor-pointer">Cancelar</button>
-        <button onclick="saveGrindSession()" class="px-4 py-2 bg-[#F7F9E0] text-[#4a3238] rounded-xl text-xs font-black cursor-pointer">Guardar Sesión Completa</button>
+        <button onclick="saveGrindSession()" class="px-4 py-2 bg-[#F7D9E0] text-[#4A3E52] rounded-xl text-xs font-black cursor-pointer">Guardar Sesión Completa</button>
       </div>
     </div>
   </div>
@@ -404,7 +419,7 @@
       </div>
       <div class="pt-2 flex justify-end space-x-2">
         <button onclick="closeModal('modal-periodic-photo')" class="px-4 py-2 border rounded-xl text-xs font-bold cursor-pointer">Cancelar</button>
-        <button onclick="savePeriodicPhoto()" class="px-4 py-2 bg-[#F7F9E0] text-[#4a3238] rounded-xl text-xs font-black cursor-pointer">Subir Gráfica</button>
+        <button onclick="savePeriodicPhoto()" class="px-4 py-2 bg-[#F7D9E0] text-[#4A3E52] rounded-xl text-xs font-black cursor-pointer">Subir Gráfica</button>
       </div>
     </div>
   </div>
@@ -425,7 +440,7 @@
       </div>
       <div class="pt-2 flex justify-end space-x-2">
         <button onclick="closeModal('modal-study')" class="px-4 py-2 border rounded-xl text-xs font-bold cursor-pointer">Cancelar</button>
-        <button onclick="saveStudyLog()" class="px-4 py-2 bg-[#F7F9E0] text-[#4a3238] rounded-xl text-xs font-black cursor-pointer">Guardar</button>
+        <button onclick="saveStudyLog()" class="px-4 py-2 bg-[#F7D9E0] text-[#4A3E52] rounded-xl text-xs font-black cursor-pointer">Guardar</button>
       </div>
     </div>
   </div>
@@ -444,7 +459,7 @@
       </div>
       <div class="pt-2 flex justify-end space-x-2">
         <button onclick="closeModal('modal-leak')" class="px-4 py-2 border rounded-xl text-xs font-bold cursor-pointer">Cancelar</button>
-        <button onclick="saveLeakItem()" class="px-4 py-2 bg-[#F7F9E0] text-[#4a3238] rounded-xl text-xs font-black cursor-pointer">Crear Leak</button>
+        <button onclick="saveLeakItem()" class="px-4 py-2 bg-[#F7D9E0] text-[#4A3E52] rounded-xl text-xs font-black cursor-pointer">Crear Leak</button>
       </div>
     </div>
   </div>
@@ -463,7 +478,7 @@
       </div>
       <div class="pt-2 flex justify-end space-x-2">
         <button onclick="closeModal('modal-leak-progress')" class="px-4 py-2 border rounded-xl text-xs font-bold cursor-pointer">Cancelar</button>
-        <button onclick="saveLeakProgress()" class="px-4 py-2 bg-[#F7F9E0] text-[#4a3238] rounded-xl text-xs font-black cursor-pointer">Registrar</button>
+        <button onclick="saveLeakProgress()" class="px-4 py-2 bg-[#F7D9E0] text-[#4A3E52] rounded-xl text-xs font-black cursor-pointer">Registrar</button>
       </div>
     </div>
   </div>
@@ -482,13 +497,13 @@
       </div>
       <div class="pt-2 flex justify-end space-x-2">
         <button onclick="closeModal('modal-trident')" class="px-4 py-2 border rounded-xl text-xs font-bold cursor-pointer">Cancelar</button>
-        <button onclick="saveTridentItem()" class="px-4 py-2 bg-[#F7F9E0] text-[#4a3238] rounded-xl text-xs font-black cursor-pointer">Guardar</button>
+        <button onclick="saveTridentItem()" class="px-4 py-2 bg-[#F7D9E0] text-[#4A3E52] rounded-xl text-xs font-black cursor-pointer">Guardar</button>
       </div>
     </div>
   </div>
 
   <!-- TOAST -->
-  <div id="toast" class="fixed bottom-5 right-5 z-50 bg-[#3b3235] text-white px-4 py-2.5 rounded-2xl shadow-xl text-xs font-bold flex items-center space-x-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+  <div id="toast" class="fixed bottom-5 right-5 z-50 bg-[#4E3E52] text-white px-4 py-2.5 rounded-2xl shadow-xl text-xs font-bold flex items-center space-x-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
     <span>✨</span>
     <span id="toast-text">Acción completada</span>
   </div>
@@ -513,7 +528,7 @@
       isCloudReady = true;
     } catch (e) { console.warn("Firebase:", e); }
 
-    const STORAGE_KEY = 'MAPKR_POKER_DATA_V6';
+    const STORAGE_KEY = 'MAPKR_POKER_DATA_V8';
 
     let appData = {
       grindSessions: [],
@@ -608,33 +623,31 @@
       saveDatabase(); closeModal('modal-goals-config'); renderAllViews(); showToast('Metas actualizadas');
     }
 
-    // METAS PERSONALIZADAS / HÁBITOS CON TRACKER SEMANAL (L-M-X-J-V-S-D)
+    // CREAR META O HÁBITO ESTRUCTURADO
     function openModalCustomGoal() {
       document.getElementById('cg-title').value = '';
-      document.getElementById('cg-freq').value = 'Diaria';
+      document.getElementById('cg-type').value = 'grind_hours';
+      document.getElementById('cg-freq').value = 'Semanal';
+      document.getElementById('cg-target').value = '30';
       openModal('modal-custom-goal');
     }
 
     function saveCustomGoal() {
       const title = document.getElementById('cg-title').value;
-      if (!title) { showToast('Escribe un título para el hábito'); return; }
+      if (!title) { showToast('Escribe un título para la meta'); return; }
+      const metricType = document.getElementById('cg-type').value;
       const frequency = document.getElementById('cg-freq').value;
+      const targetValue = parseFloat(document.getElementById('cg-target').value || 1);
 
       appData.customGoals.push({
         id: Date.now(),
         title,
+        metricType,
         frequency,
-        checkedDays: {} // Formato: {'2026-09-14': true}
+        targetValue,
+        createdAt: currentDate
       });
-      saveDatabase(); closeModal('modal-custom-goal'); renderAllViews(); showToast('Hábito creado con éxito');
-    }
-
-    function toggleGoalDay(goalId, dateStr) {
-      const goal = appData.customGoals.find(x => x.id === goalId);
-      if (!goal) return;
-      if (!goal.checkedDays) goal.checkedDays = {};
-      goal.checkedDays[dateStr] = !goal.checkedDays[dateStr];
-      saveDatabase(); renderAllViews();
+      saveDatabase(); closeModal('modal-custom-goal'); renderAllViews(); showToast('Meta creada con éxito');
     }
 
     function deleteCustomGoal(id) {
@@ -813,7 +826,7 @@
         title,
         initial: document.getElementById('leak-initial').value,
         action: document.getElementById('leak-action').value,
-        progress: [{ date: currentDate, stat: document.getElementById('leak-initial').value }]
+        progress: [{ date: currentDate, stat: document.getElementById('leak-initial'].value }]
       };
       appData.leaks.push(leak);
       saveDatabase(); closeModal('modal-leak'); renderAllViews(); showToast('Leak creado');
@@ -869,7 +882,7 @@
     // RENDER VIEWS
     function renderAllViews() {
       renderDailyGoalsProgress();
-      renderCustomGoalsTracker();
+      renderCustomGoalsAutoProgress();
       renderDailyRitualView();
       renderGrindView();
       renderStudyView();
@@ -923,7 +936,8 @@
       `;
     }
 
-    function renderCustomGoalsTracker() {
+    // CALCULAR PROGRESO AUTOMÁTICO SEGÚN FRECUENCIA Y MÉTRICA
+    function renderCustomGoalsAutoProgress() {
       const container = document.getElementById('custom-goals-container');
       const empty = document.getElementById('custom-goals-empty');
       if (!container) return;
@@ -931,44 +945,64 @@
       if (!appData.customGoals || appData.customGoals.length === 0) { empty?.classList.remove('hidden'); return; }
       empty?.classList.add('hidden');
 
-      // Calcular los últimos 7 días terminando en el currentDate seleccionado
-      const curr = new Date(currentDate + 'T00:00:00');
-      const weekDays = [];
-      for (let i = 6; i >= 0; i--) {
-        const d = new Date(curr);
-        d.setDate(d.getDate() - i);
-        const yyyy = d.getFullYear();
-        const mm = String(d.getMonth() + 1).padStart(2, '0');
-        const dd = String(d.getDate()).padStart(2, '0');
-        const dateStr = `${yyyy}-${mm}-${dd}`;
-        const dayName = ['D', 'L', 'M', 'X', 'J', 'V', 'S'][d.getDay()];
-        weekDays.push({ dateStr, dayName, shortDate: `${dd}/${mm}` });
-      }
+      const currDate = new Date(currentDate + 'T00:00:00');
 
       appData.customGoals.forEach(g => {
-        if (!g.checkedDays) g.checkedDays = {};
-        
-        let daysHtml = '';
-        weekDays.forEach(w => {
-          const isChecked = !!g.checkedDays[w.dateStr];
-          daysHtml += `
-            <div class="flex flex-col items-center">
-              <span class="text-[9px] font-extrabold text-stone-500 mb-1">${w.dayName}</span>
-              <button onclick="toggleGoalDay(${g.id}, '${w.dateStr}')" class="w-7 h-7 rounded-xl border flex items-center justify-center transition cursor-pointer ${isChecked ? 'bg-[#D6E9DC] border-[#b2d9be] text-[#2c4c37] font-black' : 'bg-[#FFF9F4] border-stone-200 text-transparent hover:border-[#F7D9E0]'}" title="${w.dateStr}">
-                ${isChecked ? '✓' : ''}
-              </button>
-            </div>`;
+        let accumulated = 0;
+
+        // Filtrar sesiones según la frecuencia
+        appData.grindSessions.forEach(s => {
+          const sDate = new Date(s.date + 'T00:00:00');
+          let inRange = false;
+
+          if (g.frequency === 'Diaria') {
+            inRange = (s.date === currentDate);
+          } else if (g.frequency === 'Semanal') {
+            // Misma semana (últimos 7 días hasta currentDate)
+            const diffTime = currDate - sDate;
+            const diffDays = diffTime / (1000 * 60 * 60 * 24);
+            inRange = (diffDays >= 0 && diffDays < 7);
+          } else if (g.frequency === 'Quincenal') {
+            const diffTime = currDate - sDate;
+            const diffDays = diffTime / (1000 * 60 * 60 * 24);
+            inRange = (diffDays >= 0 && diffDays < 15);
+          } else if (g.frequency === 'Mensual') {
+            inRange = (sDate.getFullYear() === currDate.getFullYear() && sDate.getMonth() === currDate.getMonth());
+          }
+
+          if (inRange) {
+            if (g.metricType === 'grind_hours') accumulated += (s.hours || 0);
+            else if (g.metricType === 'study_hours') accumulated += (s.studyHours || 0);
+            else if (g.metricType === 'games') accumulated += (s.games || 0);
+            else if (g.metricType === 'custom') accumulated += 1; // Cuenta días cumplidos con sesión
+          }
         });
 
+        const target = g.targetValue || 1;
+        const pct = Math.min(100, Math.round((accumulated / target) * 100));
+
+        let unitLabel = '';
+        if (g.metricType === 'grind_hours') unitLabel = 'h';
+        else if (g.metricType === 'study_hours') unitLabel = 'h';
+        else if (g.metricType === 'games') unitLabel = ' games';
+
         container.innerHTML += `
-          <div class="bg-[#FDEEF1] p-4 rounded-2xl border border-[#f5d5dc] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div>
-              <p class="font-black text-stone-800 text-xs">${g.title}</p>
-              <span class="text-[9px] font-extrabold bg-white px-2 py-0.5 rounded-md text-[#8a5b69] uppercase border border-[#f5d5dc]">${g.frequency}</span>
+          <div class="bg-[#FDEEF1] p-4 rounded-2xl border border-[#f5d5dc] space-y-3">
+            <div class="flex justify-between items-start">
+              <div>
+                <span class="text-[9px] font-black bg-white px-2 py-0.5 rounded-md text-[#8a5b69] uppercase border border-[#f5d5dc]">${g.frequency}</span>
+                <h4 class="font-black text-stone-800 text-sm mt-1">${g.title}</h4>
+              </div>
+              <button onclick="deleteCustomGoal(${g.id})" class="text-stone-400 hover:text-red-500 font-bold px-1">✕</button>
             </div>
-            <div class="flex items-center space-x-2">
-              <div class="flex space-x-1.5">${daysHtml}</div>
-              <button onclick="deleteCustomGoal(${g.id})" class="text-stone-400 hover:text-red-500 font-bold px-2 ml-2">✕</button>
+            <div class="space-y-1">
+              <div class="flex justify-between items-center text-xs font-black">
+                <span class="text-stone-600">Progreso Automático</span>
+                <span class="${pct >= 100 ? 'text-[#2c4c37]' : 'text-[#8a5b69]'}">${accumulated.toFixed(1)}${unitLabel} / ${target}${unitLabel} (${pct}%)</span>
+              </div>
+              <div class="w-full bg-[#fce4e8] h-2.5 rounded-full overflow-hidden">
+                <div class="bg-[#F7D9E0] h-full rounded-full transition-all duration-300" style="width: ${pct}%"></div>
+              </div>
             </div>
           </div>`;
       });
@@ -983,7 +1017,7 @@
         container.innerHTML = `
           <div class="col-span-2 bg-white border-poker rounded-3xl p-8 text-center space-y-3">
             <p class="text-stone-500 text-xs font-bold">No hay sesión registrada para esta fecha (${currentDate}).</p>
-            <button onclick="openModalGrind()" class="px-5 py-2.5 bg-[#F7F9E0] text-[#4a3238] rounded-xl text-xs font-black shadow-sm cursor-pointer">+ Registrar Sesión, Ritual y Gráfica</button>
+            <button onclick="openModalGrind()" class="px-5 py-2.5 bg-[#F7F9E0] text-[#4A3E52] rounded-xl text-xs font-black shadow-sm cursor-pointer">+ Registrar Sesión, Ritual y Gráfica</button>
           </div>`;
         return;
       }
@@ -1056,7 +1090,7 @@
       [...appData.periodicPhotos].sort((a,b) => b.date.localeCompare(a.date)).forEach(p => {
         gallery.innerHTML += `
           <div class="bg-[#FDEEF1] border border-[#f5d5dc] rounded-2xl p-2.5 space-y-2 relative">
-            <span class="absolute top-4 left-4 bg-[#F7D9E0] text-[#4a3238] text-[9px] font-black px-2 py-0.5 rounded-md uppercase">${p.type}</span>
+            <span class="absolute top-4 left-4 bg-[#F7D9E0] text-[#4A3E52] text-[9px] font-black px-2 py-0.5 rounded-md uppercase">${p.type}</span>
             <img src="${p.dataUrl}" class="w-full h-32 object-cover rounded-xl border border-stone-200">
             <div class="flex justify-between items-center text-xs">
               <div><p class="font-black text-stone-800 truncate">${p.title}</p><p class="text-[10px] text-stone-500">${p.date}</p></div>
@@ -1109,7 +1143,7 @@
               <div class="flex flex-wrap gap-2">${progHtml}</div>
             </div>
             <div class="flex justify-between items-center pt-2">
-              <button onclick="openModalLeakProgress(${leak.id})" class="px-3 py-1.5 bg-[#F7F9E0] text-[#4a3238] rounded-xl text-xs font-bold">+ Registrar Medición</button>
+              <button onclick="openModalLeakProgress(${leak.id})" class="px-3 py-1.5 bg-[#F7F9E0] text-[#4A3E52] rounded-xl text-xs font-bold">+ Registrar Medición</button>
             </div>
           </div>`;
       });
