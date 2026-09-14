@@ -51,14 +51,13 @@
         </div>
       </div>
 
-      <!-- HORIZONTAL NAVIGATION BAR -->
       <nav class="flex flex-wrap items-center justify-center gap-1.5 bg-[#3d3235] p-1.5 rounded-2xl border border-[#4d3f43]">
         <button onclick="switchTab('resumen')" id="tab-btn-resumen" class="nav-btn active px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-300 hover:text-white">📊 Resumen & Ritual</button>
-        <button onclick="switchTab('grind')" id="tab-btn-grind" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-300 hover:text-white">🃏 Grind Diario</button>
+        <button onclick="switchTab('grind')" id="tab-btn-grind" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-300 hover:text-white">🃏 Sesiones</button>
         <button onclick="switchTab('estudio')" id="tab-btn-estudio" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-300 hover:text-white">📚 Estudio & Manos</button>
         <button onclick="switchTab('leaks')" id="tab-btn-leaks" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-300 hover:text-white">🎯 Leaks & Tracking</button>
         <button onclick="switchTab('tridents')" id="tab-btn-tridents" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-300 hover:text-white">⚡ Tridents</button>
-        <button onclick="switchTab('reportes')" id="tab-btn-reportes" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-300 hover:text-white">📈 Reportes & Filtros</button>
+        <button onclick="switchTab('reportes')" id="tab-btn-reportes" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-300 hover:text-white">📈 Reportes & Gráficas</button>
       </nav>
 
       <div class="flex items-center space-x-2">
@@ -74,102 +73,46 @@
     <!-- SELECTOR DE FECHA GLOBAL DIARIA -->
     <div class="bg-white border-poker rounded-3xl p-4 shadow-xs flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center space-x-3">
-        <span class="text-xs font-black uppercase text-stone-500 tracking-wider">📅 Día Operativo Actual:</span>
+        <span class="text-xs font-black uppercase text-stone-500 tracking-wider">📅 Día Seleccionado:</span>
         <input type="date" id="global-date" onchange="handleGlobalDateChange(this.value)" class="bg-[#f7f4f0] border border-stone-300 rounded-xl px-3 py-1.5 text-xs font-black text-stone-800 focus:outline-none">
       </div>
       <div class="flex items-center gap-2">
-        <button onclick="openModalGrind()" class="px-4 py-2 bg-[#c97b84] hover:bg-[#b86b72] text-white font-extrabold text-xs rounded-xl shadow-sm transition cursor-pointer">+ Registrar Sesión de Hoy</button>
+        <button onclick="openModalGrind()" class="px-4 py-2 bg-[#c97b84] hover:bg-[#b86b72] text-white font-extrabold text-xs rounded-xl shadow-sm transition cursor-pointer">+ Registrar / Editar Sesión Completa</button>
       </div>
     </div>
 
-    <!-- PANE 1: RESUMEN & RITUAL (Warm-up, Metas de Hoy & Cool-down) -->
+    <!-- PANE 1: RESUMEN & RITUAL -->
     <section id="pane-resumen" class="tab-pane space-y-6">
       
-      <!-- TARJETA DE CUMPLIMIENTO DE METAS DIARIAS -->
+      <!-- ESTADO DE METAS (DIARIAS, SEMANALES Y MENSUALES) -->
       <div class="bg-white border-poker rounded-3xl p-6 shadow-sm space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-stone-100">
           <div>
-            <h3 class="text-base font-black text-stone-800">🎯 Estado de Metas del Día (<span id="goals-date-label">Hoy</span>)</h3>
-            <p class="text-xs text-stone-500">Progreso en tiempo real según tu registro de grind</p>
+            <h3 class="text-base font-black text-stone-800">🎯 Estado de Metas Diarias (<span id="goals-date-label">Hoy</span>)</h3>
+            <p class="text-xs text-stone-500">Progreso según tu sesión registrada para esta fecha</p>
           </div>
-          <button onclick="openModalGoalsConfig()" class="text-xs font-extrabold text-[#c97b84] hover:underline cursor-pointer">⚙️ Configurar Metas Diarias</button>
+          <button onclick="openModalGoalsConfig()" class="text-xs font-extrabold text-[#c97b84] hover:underline cursor-pointer">⚙️ Configurar Metas</button>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="daily-goals-progress">
-          <!-- Se inyecta dinámicamente -->
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="daily-goals-progress"></div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- WARM UP -->
-        <div class="bg-white border-poker rounded-3xl p-6 shadow-sm space-y-4">
-          <div class="flex items-center justify-between pb-3 border-b border-stone-100">
-            <h3 class="text-base font-black text-stone-800">☀️ Warm-up (Pre-sesión)</h3>
-            <span class="text-[10px] font-extrabold bg-[#f7f4f0] text-[#c97b84] px-2.5 py-1 rounded-lg">Activación Mental</span>
-          </div>
-          <div class="space-y-3 text-xs">
-            <label class="flex items-center space-x-2.5 cursor-pointer bg-[#f7f4f0] p-3 rounded-2xl">
-              <input type="checkbox" id="wu-env" onchange="saveRitualData()" class="accent-[#c97b84] w-4 h-4 rounded">
-              <span class="font-bold text-stone-700">Espacio ordenado y programas abiertos (GTO Wizard, etc.)</span>
-            </label>
-            <label class="flex items-center space-x-2.5 cursor-pointer bg-[#f7f4f0] p-3 rounded-2xl">
-              <input type="checkbox" id="wu-mind" onchange="saveRitualData()" class="accent-[#c97b84] w-4 h-4 rounded">
-              <span class="font-bold text-stone-700">Activación realizada (respiración / meditación)</span>
-            </label>
-            <div class="grid grid-cols-2 gap-3 pt-2">
-              <div>
-                <label class="font-bold text-stone-500 block mb-1">Nivel de Energía (1-10)</label>
-                <input type="number" min="1" max="10" id="wu-energy" onchange="saveRitualData()" value="8" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-black text-center">
-              </div>
-              <div>
-                <label class="font-bold text-stone-500 block mb-1">Enfoque Inicial (1-10)</label>
-                <input type="number" min="1" max="10" id="wu-focus" onchange="saveRitualData()" value="8" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-black text-center">
-              </div>
-            </div>
-            <div>
-              <label class="font-bold text-stone-500 block mb-1">Intención del Día</label>
-              <input type="text" id="wu-intention" onchange="saveRitualData()" placeholder="Ej. Jugar sólido, cero tilt..." class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-medium">
-            </div>
-          </div>
-        </div>
-
-        <!-- COOL DOWN -->
-        <div class="bg-white border-poker rounded-3xl p-6 shadow-sm space-y-4">
-          <div class="flex items-center justify-between pb-3 border-b border-stone-100">
-            <h3 class="text-base font-black text-stone-800">🌙 Cool-down (Post-sesión)</h3>
-            <span class="text-[10px] font-extrabold bg-[#f7f4f0] text-[#c97b84] px-2.5 py-1 rounded-lg">Cierre Analítico</span>
-          </div>
-          <div class="space-y-3 text-xs">
-            <div>
-              <label class="font-bold text-stone-500 block mb-1">Sensaciones al terminar</label>
-              <textarea id="cd-sensations" rows="2" oninput="saveRitualData()" placeholder="¿Cómo te sentiste físicamente y mentalmente?" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl p-3 font-medium"></textarea>
-            </div>
-            <div>
-              <label class="font-bold text-stone-500 block mb-1">Alertas de fatiga o tilt</label>
-              <input type="text" id="cd-tilt" oninput="saveRitualData()" placeholder="¿Hubo algún spot de juego automático o cansancio?" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-medium">
-            </div>
-            <div>
-              <label class="font-bold text-stone-500 block mb-1">Reflexión de cierre</label>
-              <textarea id="cd-reflection" rows="2" oninput="saveRitualData()" placeholder="Conclusión principal del día..." class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl p-3 font-medium"></textarea>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- VISTA DEL RITUAL DE LA FECHA SELECCIONADA -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="daily-ritual-view"></div>
     </section>
 
-    <!-- PANE 2: GRIND DIARIO -->
+    <!-- PANE 2: SESIONES -->
     <section id="pane-grind" class="tab-pane space-y-6 hidden">
       <div class="bg-white border-poker rounded-3xl p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 class="text-xl font-black text-stone-800">Registro Consolidado de Sesión</h2>
-          <p class="text-xs text-stone-500 mt-0.5">Ingresa los totales de tu jornada de pomodoros</p>
+          <h2 class="text-xl font-black text-stone-800">Historial de Sesiones & Gráficas</h2>
+          <p class="text-xs text-stone-500 mt-0.5">Todas tus jornadas registradas con sus capturas</p>
         </div>
-        <button onclick="openModalGrind()" class="px-4 py-2 bg-[#c97b84] text-white font-extrabold text-xs rounded-xl shadow-sm cursor-pointer">+ Registrar o Editar Hoy</button>
+        <button onclick="openModalGrind()" class="px-4 py-2 bg-[#c97b84] text-white font-extrabold text-xs rounded-xl shadow-sm cursor-pointer">+ Nueva Sesión</button>
       </div>
 
       <div class="bg-white border-poker rounded-3xl p-6 shadow-sm">
-        <h3 class="text-sm font-black text-stone-800 mb-4">Historial de Sesiones Registradas</h3>
-        <div id="grind-sessions-list" class="space-y-3"></div>
-        <p id="grind-empty" class="text-xs text-stone-400 text-center py-6">No hay sesiones en este período.</p>
+        <div id="grind-sessions-list" class="space-y-4"></div>
+        <p id="grind-empty" class="text-xs text-stone-400 text-center py-6">No hay sesiones registradas.</p>
       </div>
     </section>
 
@@ -189,7 +132,7 @@
       </div>
     </section>
 
-    <!-- PANE 4: LEAKS & TRACKING (CORRECCIONES CON EVOLUCIÓN) -->
+    <!-- PANE 4: LEAKS & TRACKING -->
     <section id="pane-leaks" class="tab-pane space-y-6 hidden">
       <div class="bg-white border-poker rounded-3xl p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -219,18 +162,18 @@
       </div>
     </section>
 
-    <!-- PANE 6: REPORTES & FILTROS -->
+    <!-- PANE 6: REPORTES & GRÁFICAS -->
     <section id="pane-reportes" class="tab-pane space-y-6 hidden">
-      <div class="bg-white border-poker rounded-3xl p-6 shadow-sm space-y-4">
+      <div class="bg-white border-poker rounded-3xl p-6 shadow-sm space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-stone-100">
           <div>
-            <h2 class="text-xl font-black text-stone-800">Panel de Métricas & Filtros</h2>
-            <p class="text-xs text-stone-500">Selecciona el rango de fechas y presiona Filtrar</p>
+            <h2 class="text-xl font-black text-stone-800">Panel de Métricas & Bóveda de Gráficas</h2>
+            <p class="text-xs text-stone-500">Filtra tus números o guarda tus gráficas semanales y mensuales</p>
           </div>
           <button onclick="copyWeeklyReport()" class="px-4 py-2 bg-stone-900 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-stone-800 cursor-pointer">📋 Copiar Reporte General</button>
         </div>
 
-        <!-- FILTROS MANUALES CON BOTÓN FILTRAR -->
+        <!-- FILTROS MANUALES -->
         <div class="flex flex-wrap items-center gap-3 bg-[#f7f4f0] p-4 rounded-2xl">
           <div class="flex items-center space-x-2">
             <span class="text-xs font-bold text-stone-600">Desde:</span>
@@ -243,7 +186,6 @@
           <button onclick="applyReportFilters()" class="px-5 py-2 bg-[#c97b84] text-white font-extrabold text-xs rounded-xl shadow-sm hover:bg-[#b86b72] cursor-pointer">🔍 Filtrar</button>
         </div>
 
-        <!-- KPIS SEPARADOS -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
           <div class="bg-[#f7f4f0] border border-stone-200 rounded-2xl p-4 text-center">
             <span class="text-[10px] font-bold text-stone-500 uppercase">Horas de Grind</span>
@@ -262,6 +204,16 @@
             <p class="text-xl font-black text-emerald-600 mt-1" id="kpi-avg-cev">0.0</p>
           </div>
         </div>
+
+        <!-- BÓVEDA DE GRÁFICAS SEMANALES / MENSUALES -->
+        <div class="pt-6 border-t border-stone-100 space-y-4">
+          <div class="flex justify-between items-center">
+            <h3 class="text-base font-black text-stone-800">📈 Bóveda de Gráficas (Semanal / Mensual)</h3>
+            <button onclick="openModalPeriodicPhoto()" class="px-4 py-2 bg-[#c97b84] text-white font-bold text-xs rounded-xl shadow-sm cursor-pointer">+ Subir Gráfica Periódica</button>
+          </div>
+          <div id="periodic-photos-gallery" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
+          <p id="periodic-photos-empty" class="text-xs text-stone-400 text-center py-4">No hay gráficas semanales o mensuales adjuntas.</p>
+        </div>
       </div>
     </section>
 
@@ -271,21 +223,20 @@
   <div id="modal-goals-config" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
     <div class="bg-white border-poker rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4">
       <div class="flex items-center justify-between pb-2 border-b border-stone-100">
-        <h3 class="text-base font-black text-stone-800">⚙️ Configurar Metas Diarias</h3>
+        <h3 class="text-base font-black text-stone-800">⚙️ Configurar Metas</h3>
         <button onclick="closeModal('modal-goals-config')" class="text-stone-400 font-bold cursor-pointer">✕</button>
       </div>
       <div class="space-y-3 text-xs">
-        <div>
-          <label class="font-bold text-stone-500 block mb-1">Meta Horas de Grind</label>
-          <input type="number" step="0.5" id="cfg-target-hours" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
+        <p class="font-bold text-stone-700">Metas Diarias:</p>
+        <div class="grid grid-cols-3 gap-2">
+          <input type="number" step="0.5" id="cfg-target-hours" placeholder="Horas Grind" class="bg-[#f7f4f0] border border-stone-200 rounded-xl px-2 py-1.5 font-bold">
+          <input type="number" step="0.5" id="cfg-target-study" placeholder="Horas Estudio" class="bg-[#f7f4f0] border border-stone-200 rounded-xl px-2 py-1.5 font-bold">
+          <input type="number" id="cfg-target-games" placeholder="Games" class="bg-[#f7f4f0] border border-stone-200 rounded-xl px-2 py-1.5 font-bold">
         </div>
+        <p class="font-bold text-stone-700 pt-2">Metas Semanales & Mensuales:</p>
         <div>
-          <label class="font-bold text-stone-500 block mb-1">Meta Horas de Estudio</label>
-          <input type="number" step="0.5" id="cfg-target-study" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
-        </div>
-        <div>
-          <label class="font-bold text-stone-500 block mb-1">Meta Games Diarios</label>
-          <input type="number" id="cfg-target-games" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
+          <input type="number" id="cfg-target-weekly-games" placeholder="Meta Games Semanales (ej 600)" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold mb-2">
+          <input type="number" id="cfg-target-monthly-games" placeholder="Meta Games Mensuales (ej 2500)" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
         </div>
       </div>
       <div class="pt-2 flex justify-end space-x-2">
@@ -295,61 +246,134 @@
     </div>
   </div>
 
-  <!-- MODAL GRIND -->
+  <!-- MODAL UNIFICADO (WARM-UP + GRIND + COOL-DOWN + IMAGEN) -->
   <div id="modal-grind" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
-    <div class="bg-white border-poker rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+    <div class="bg-white border-poker rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between pb-2 border-b border-stone-100">
-        <h3 class="text-base font-black text-stone-800">Registrar / Editar Sesión</h3>
+        <h3 class="text-base font-black text-stone-800">♠️ Registro Diario Completo con Gráfica</h3>
         <button onclick="closeModal('modal-grind')" class="text-stone-400 font-bold cursor-pointer">✕</button>
       </div>
-      <div class="space-y-3 text-xs">
+      <div class="space-y-4 text-xs">
         <input type="hidden" id="grind-edit-id">
         <div>
-          <label class="font-bold text-stone-500 block mb-1">Fecha</label>
+          <label class="font-bold text-stone-500 block mb-1">Fecha de la Sesión</label>
           <input type="date" id="grind-date" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
         </div>
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="font-bold text-stone-500 block mb-1">Horas de Grind</label>
-            <input type="number" step="0.1" id="grind-hours" placeholder="4.5" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
+
+        <!-- WARM-UP -->
+        <div class="bg-[#f7f4f0] p-4 rounded-2xl border border-stone-200 space-y-3">
+          <h4 class="font-black text-stone-800 text-xs uppercase tracking-wider text-[#c97b84]">☀️ Warm-up (Pre-sesión)</h4>
+          <div class="space-y-2">
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" id="modal-wu-env" class="accent-[#c97b84] w-4 h-4 rounded">
+              <span class="font-bold text-stone-700">Espacio ordenado y programas abiertos</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" id="modal-wu-mind" class="accent-[#c97b84] w-4 h-4 rounded">
+              <span class="font-bold text-stone-700">Activación realizada (respiración / meditación)</span>
+            </label>
           </div>
-          <div>
-            <label class="font-bold text-stone-500 block mb-1">Total Games</label>
-            <input type="number" id="grind-games" placeholder="100" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="font-bold text-stone-500 block mb-1">Energía Inicial (1-10)</label>
+              <input type="number" min="1" max="10" id="modal-wu-energy" value="8" class="w-full bg-white border border-stone-200 rounded-xl px-2 py-1.5 font-bold text-center">
+            </div>
+            <div>
+              <label class="font-bold text-stone-500 block mb-1">Enfoque Inicial (1-10)</label>
+              <input type="number" min="1" max="10" id="modal-wu-focus" value="8" class="w-full bg-white border border-stone-200 rounded-xl px-2 py-1.5 font-bold text-center">
+            </div>
+          </div>
+          <input type="text" id="modal-wu-intention" placeholder="Intención del día..." class="w-full bg-white border border-stone-200 rounded-xl px-3 py-2 font-medium">
+        </div>
+
+        <!-- GRIND NÚMEROS -->
+        <div class="bg-white p-4 rounded-2xl border border-stone-200 space-y-3">
+          <h4 class="font-black text-stone-800 text-xs uppercase tracking-wider text-stone-700">🃏 Métricas del Grind</h4>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="font-bold text-stone-500 block mb-1">Horas de Grind</label>
+              <input type="number" step="0.1" id="grind-hours" placeholder="4.5" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
+            </div>
+            <div>
+              <label class="font-bold text-stone-500 block mb-1">Total Games</label>
+              <input type="number" id="grind-games" placeholder="100" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <div>
+              <label class="font-bold text-stone-500 block mb-1">cEV</label>
+              <input type="number" step="0.1" id="grind-cev" placeholder="65.0" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-2 py-1.5 font-bold">
+            </div>
+            <div>
+              <label class="font-bold text-stone-500 block mb-1">Focus Final</label>
+              <input type="number" min="1" max="10" id="grind-focus" value="8" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-2 py-1.5 font-bold">
+            </div>
+            <div>
+              <label class="font-bold text-stone-500 block mb-1">Mindset</label>
+              <input type="number" min="1" max="10" id="grind-mindset" value="8" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-2 py-1.5 font-bold">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="font-bold text-stone-500 block mb-1">Horas de Estudio</label>
+              <input type="number" step="0.1" id="grind-study" placeholder="1.5" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
+            </div>
+            <div>
+              <label class="font-bold text-stone-500 block mb-1">Manos Marcadas</label>
+              <input type="number" id="grind-hands" placeholder="12" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
+            </div>
           </div>
         </div>
-        <div class="grid grid-cols-3 gap-2">
+
+        <!-- COOL-DOWN + FOTO GRÁFICA -->
+        <div class="bg-[#f7f4f0] p-4 rounded-2xl border border-stone-200 space-y-3">
+          <h4 class="font-black text-stone-800 text-xs uppercase tracking-wider text-[#c97b84]">🌙 Cool-down & Gráfica de Sesión</h4>
           <div>
-            <label class="font-bold text-stone-500 block mb-1">cEV</label>
-            <input type="number" step="0.1" id="grind-cev" placeholder="65.0" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-2 py-1.5 font-bold">
+            <label class="font-bold text-stone-500 block mb-1">Sensaciones al terminar</label>
+            <textarea id="modal-cd-sensations" rows="2" placeholder="¿Cómo te sentiste..." class="w-full bg-white border border-stone-200 rounded-xl p-2 font-medium"></textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="font-bold text-stone-500 block mb-1">Alertas de tilt</label>
+              <input type="text" id="modal-cd-tilt" placeholder="Spots de juego automático..." class="w-full bg-white border border-stone-200 rounded-xl px-3 py-2 font-medium">
+            </div>
+            <div>
+              <label class="font-bold text-stone-500 block mb-1">Ganancias / EV (€/$)</label>
+              <input type="text" id="grind-notes" placeholder="Datos financieros..." class="w-full bg-white border border-stone-200 rounded-xl px-3 py-2 font-medium">
+            </div>
           </div>
           <div>
-            <label class="font-bold text-stone-500 block mb-1">Focus (1-10)</label>
-            <input type="number" min="1" max="10" id="grind-focus" value="8" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-2 py-1.5 font-bold">
+            <label class="font-bold text-stone-500 block mb-1">📸 Adjuntar Imagen / Gráfica de la Sesión</label>
+            <input type="file" id="grind-image-input" accept="image/*" class="w-full text-xs font-bold bg-white p-2 rounded-xl border border-stone-200">
           </div>
-          <div>
-            <label class="font-bold text-stone-500 block mb-1">Mindset (1-10)</label>
-            <input type="number" min="1" max="10" id="grind-mindset" value="8" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-2 py-1.5 font-bold">
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="font-bold text-stone-500 block mb-1">Horas de Estudio</label>
-            <input type="number" step="0.1" id="grind-study" placeholder="1.5" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
-          </div>
-          <div>
-            <label class="font-bold text-stone-500 block mb-1">Manos Marcadas</label>
-            <input type="number" id="grind-hands" placeholder="12" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
-          </div>
-        </div>
-        <div>
-          <label class="font-bold text-stone-500 block mb-1">Notas / EV / Ganancias (€/$)</label>
-          <textarea id="grind-notes" rows="2" placeholder="Sensaciones o datos financieros..." class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-medium"></textarea>
         </div>
       </div>
       <div class="pt-2 flex justify-end space-x-2">
         <button onclick="closeModal('modal-grind')" class="px-4 py-2 border rounded-xl text-xs font-bold cursor-pointer">Cancelar</button>
-        <button onclick="saveGrindSession()" class="px-4 py-2 bg-[#c97b84] text-white rounded-xl text-xs font-black cursor-pointer">Guardar Sesión</button>
+        <button onclick="saveGrindSession()" class="px-4 py-2 bg-[#c97b84] text-white rounded-xl text-xs font-black cursor-pointer">Guardar Sesión Completa</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL SUBIR GRÁFICA PERIÓDICA (SEMANAL/MENSUAL) -->
+  <div id="modal-periodic-photo" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
+    <div class="bg-white border-poker rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between pb-2 border-b border-stone-100">
+        <h3 class="text-base font-black text-stone-800">Subir Gráfica Semanal/Mensual</h3>
+        <button onclick="closeModal('modal-periodic-photo')" class="text-stone-400 font-bold cursor-pointer">✕</button>
+      </div>
+      <div class="space-y-3 text-xs">
+        <input type="date" id="periodic-photo-date" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
+        <select id="periodic-photo-type" class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
+          <option value="Semanal">Gráfica Semanal</option>
+          <option value="Mensual">Gráfica Mensual</option>
+        </select>
+        <input type="file" id="periodic-photo-file" accept="image/*" class="w-full text-xs font-bold">
+        <input type="text" id="periodic-photo-title" placeholder="Título (ej. Cierre Semana 37)..." class="w-full bg-[#f7f4f0] border border-stone-200 rounded-xl px-3 py-2 font-bold">
+      </div>
+      <div class="pt-2 flex justify-end space-x-2">
+        <button onclick="closeModal('modal-periodic-photo')" class="px-4 py-2 border rounded-xl text-xs font-bold cursor-pointer">Cancelar</button>
+        <button onclick="savePeriodicPhoto()" class="px-4 py-2 bg-[#c97b84] text-white rounded-xl text-xs font-black cursor-pointer">Subir Gráfica</button>
       </div>
     </div>
   </div>
@@ -458,15 +482,15 @@
       isCloudReady = true;
     } catch (e) { console.warn("Firebase:", e); }
 
-    const STORAGE_KEY = 'MAPKR_POKER_DATA_V2';
+    const STORAGE_KEY = 'MAPKR_POKER_DATA_V4';
 
     let appData = {
       grindSessions: [],
       studyLogs: [],
       leaks: [],
       tridents: [],
-      rituals: {},
-      goalsConfig: { hours: 4.0, study: 1.0, games: 85 }
+      periodicPhotos: [],
+      goalsConfig: { hours: 4.0, study: 1.0, games: 85, weeklyGames: 600, monthlyGames: 2500 }
     };
 
     let activeTabId = 'resumen';
@@ -486,7 +510,6 @@
       document.getElementById('report-from').value = thirtyDaysAgo.toISOString().slice(0,10);
       document.getElementById('report-to').value = currentDate;
 
-      loadRitualForDate(currentDate);
       renderAllViews();
     }
 
@@ -494,6 +517,7 @@
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) appData = Object.assign({}, appData, JSON.parse(raw));
+        if (!Array.isArray(appData.periodicPhotos)) appData.periodicPhotos = [];
       } catch (e) { console.warn(e); }
     }
 
@@ -530,16 +554,17 @@
 
     function handleGlobalDateChange(val) {
       currentDate = val;
-      loadRitualForDate(currentDate);
       renderAllViews();
     }
 
-    // CONFIGURAR METAS DIARIAS
+    // CONFIGURAR METAS
     function openModalGoalsConfig() {
-      const gc = appData.goalsConfig || { hours: 4.0, study: 1.0, games: 85 };
+      const gc = appData.goalsConfig || { hours: 4.0, study: 1.0, games: 85, weeklyGames: 600, monthlyGames: 2500 };
       document.getElementById('cfg-target-hours').value = gc.hours;
       document.getElementById('cfg-target-study').value = gc.study;
       document.getElementById('cfg-target-games').value = gc.games;
+      document.getElementById('cfg-target-weekly-games').value = gc.weeklyGames || 600;
+      document.getElementById('cfg-target-monthly-games').value = gc.monthlyGames || 2500;
       openModal('modal-goals-config');
     }
 
@@ -547,95 +572,134 @@
       appData.goalsConfig = {
         hours: parseFloat(document.getElementById('cfg-target-hours').value || 4),
         study: parseFloat(document.getElementById('cfg-target-study').value || 1),
-        games: parseInt(document.getElementById('cfg-target-games').value || 85)
+        games: parseInt(document.getElementById('cfg-target-games').value || 85),
+        weeklyGames: parseInt(document.getElementById('cfg-target-weekly-games').value || 600),
+        monthlyGames: parseInt(document.getElementById('cfg-target-monthly-games').value || 2500)
       };
-      saveDatabase(); closeModal('modal-goals-config'); renderAllViews(); showToast('Metas diarias actualizadas');
+      saveDatabase(); closeModal('modal-goals-config'); renderAllViews(); showToast('Metas actualizadas');
     }
 
-    // RITUALES
-    function loadRitualForDate(dateStr) {
-      const r = appData.rituals[dateStr] || { env: false, mind: false, energy: 8, focus: 8, intention: '', sensations: '', tilt: '', reflection: '' };
-      document.getElementById('wu-env').checked = r.env;
-      document.getElementById('wu-mind').checked = r.mind;
-      document.getElementById('wu-energy').value = r.energy;
-      document.getElementById('wu-focus').value = r.focus;
-      document.getElementById('wu-intention').value = r.intention;
-      document.getElementById('cd-sensations').value = r.sensations;
-      document.getElementById('cd-tilt').value = r.tilt;
-      document.getElementById('cd-reflection').value = r.reflection;
-    }
-
-    function saveRitualData() {
-      appData.rituals[currentDate] = {
-        env: document.getElementById('wu-env').checked,
-        mind: document.getElementById('wu-mind').checked,
-        energy: parseInt(document.getElementById('wu-energy').value || 8),
-        focus: parseInt(document.getElementById('wu-focus').value || 8),
-        intention: document.getElementById('wu-intention').value,
-        sensations: document.getElementById('cd-sensations').value,
-        tilt: document.getElementById('cd-tilt').value,
-        reflection: document.getElementById('cd-reflection').value
-      };
-      saveDatabase();
-    }
-
-    // GRIND CRUD
+    // GRIND / SESION UNIFICADA CRUD + IMAGEN
     function openModalGrind() {
-      document.getElementById('grind-edit-id').value = '';
+      const existing = appData.grindSessions.find(s => s.date === currentDate) || {};
+      document.getElementById('grind-edit-id').value = existing.id || '';
       document.getElementById('grind-date').value = currentDate;
-      document.getElementById('grind-hours').value = '';
-      document.getElementById('grind-games').value = '';
-      document.getElementById('grind-cev').value = '';
-      document.getElementById('grind-focus').value = '8';
-      document.getElementById('grind-mindset').value = '8';
-      document.getElementById('grind-study').value = '';
-      document.getElementById('grind-hands').value = '';
-      document.getElementById('grind-notes').value = '';
+      
+      document.getElementById('modal-wu-env').checked = !!existing.wuEnv;
+      document.getElementById('modal-wu-mind').checked = !!existing.wuMind;
+      document.getElementById('modal-wu-energy').value = existing.wuEnergy || 8;
+      document.getElementById('modal-wu-focus').value = existing.wuFocus || 8;
+      document.getElementById('modal-wu-intention').value = existing.wuIntention || '';
+
+      document.getElementById('grind-hours').value = existing.hours || '';
+      document.getElementById('grind-games').value = existing.games || '';
+      document.getElementById('grind-cev').value = existing.cev || '';
+      document.getElementById('grind-focus').value = existing.focus || 8;
+      document.getElementById('grind-mindset').value = existing.mindset || 8;
+      document.getElementById('grind-study').value = existing.studyHours || '';
+      document.getElementById('grind-hands').value = existing.hands || '';
+      document.getElementById('grind-notes').value = existing.notes || '';
+
+      document.getElementById('modal-cd-sensations').value = existing.cdSensations || '';
+      document.getElementById('modal-cd-tilt').value = existing.cdTilt || '';
+      document.getElementById('grind-image-input').value = '';
+
       openModal('modal-grind');
     }
 
     function editGrindSession(id) {
       const s = appData.grindSessions.find(x => x.id === id);
       if (!s) return;
-      document.getElementById('grind-edit-id').value = s.id;
-      document.getElementById('grind-date').value = s.date;
-      document.getElementById('grind-hours').value = s.hours;
-      document.getElementById('grind-games').value = s.games;
-      document.getElementById('grind-cev').value = s.cev;
-      document.getElementById('grind-focus').value = s.focus;
-      document.getElementById('grind-mindset').value = s.mindset;
-      document.getElementById('grind-study').value = s.studyHours;
-      document.getElementById('grind-hands').value = s.hands;
-      document.getElementById('grind-notes').value = s.notes;
-      openModal('modal-grind');
+      currentDate = s.date;
+      document.getElementById('global-date').value = currentDate;
+      openModalGrind();
     }
 
     function saveGrindSession() {
       const editId = document.getElementById('grind-edit-id').value;
-      const session = {
-        id: editId ? parseInt(editId) : Date.now(),
-        date: document.getElementById('grind-date').value || currentDate,
-        hours: parseFloat(document.getElementById('grind-hours').value || 0),
-        games: parseInt(document.getElementById('grind-games').value || 0),
-        cev: parseFloat(document.getElementById('grind-cev').value || 0),
-        focus: parseInt(document.getElementById('grind-focus').value || 8),
-        mindset: parseInt(document.getElementById('grind-mindset').value || 8),
-        studyHours: parseFloat(document.getElementById('grind-study').value || 0),
-        hands: parseInt(document.getElementById('grind-hands').value || 0),
-        notes: document.getElementById('grind-notes').value
+      const targetDate = document.getElementById('grind-date').value || currentDate;
+      const fileInput = document.getElementById('grind-image-input');
+
+      const existing = appData.grindSessions.find(x => x.id === parseInt(editId) || x.date === targetDate) || {};
+      let imageDataUrl = existing.imageUrl || '';
+
+      const processSave = (imgUrl) => {
+        const session = {
+          id: editId ? parseInt(editId) : Date.now(),
+          date: targetDate,
+          wuEnv: document.getElementById('modal-wu-env').checked,
+          wuMind: document.getElementById('modal-wu-mind').checked,
+          wuEnergy: parseInt(document.getElementById('modal-wu-energy').value || 8),
+          wuFocus: parseInt(document.getElementById('modal-wu-focus').value || 8),
+          wuIntention: document.getElementById('modal-wu-intention').value,
+          
+          hours: parseFloat(document.getElementById('grind-hours').value || 0),
+          games: parseInt(document.getElementById('grind-games').value || 0),
+          cev: parseFloat(document.getElementById('grind-cev').value || 0),
+          focus: parseInt(document.getElementById('grind-focus').value || 8),
+          mindset: parseInt(document.getElementById('grind-mindset').value || 8),
+          studyHours: parseFloat(document.getElementById('grind-study').value || 0),
+          hands: parseInt(document.getElementById('grind-hands').value || 0),
+          notes: document.getElementById('grind-notes').value,
+
+          cdSensations: document.getElementById('modal-cd-sensations').value,
+          cdTilt: document.getElementById('modal-cd-tilt').value,
+          imageUrl: imgUrl
+        };
+
+        appData.grindSessions = appData.grindSessions.filter(x => x.id !== session.id && x.date !== targetDate);
+        appData.grindSessions.push(session);
+
+        saveDatabase(); closeModal('modal-grind'); renderAllViews(); showToast('Sesión guardada con éxito');
       };
 
-      if (editId) {
-        appData.grindSessions = appData.grindSessions.map(x => x.id === session.id ? session : x);
+      if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.readAsDataURL(fileInput.files[0]);
+        reader.onload = e => processSave(e.target.result);
       } else {
-        appData.grindSessions.push(session);
+        processSave(imageDataUrl);
       }
-      saveDatabase(); closeModal('modal-grind'); renderAllViews(); showToast('Sesión guardada con éxito');
     }
 
     function deleteGrindSession(id) {
       appData.grindSessions = appData.grindSessions.filter(x => x.id !== id);
       saveDatabase(); renderAllViews(); showToast('Sesión eliminada');
+    }
+
+    // FOTOS PERIÓDICAS (SEMANAL/MENSUAL)
+    function openModalPeriodicPhoto() {
+      document.getElementById('periodic-photo-date').value = currentDate;
+      document.getElementById('periodic-photo-title').value = '';
+      document.getElementById('periodic-photo-file').value = '';
+      openModal('modal-periodic-photo');
+    }
+
+    function savePeriodicPhoto() {
+      const fileInput = document.getElementById('periodic-photo-file');
+      const date = document.getElementById('periodic-photo-date').value || currentDate;
+      const type = document.getElementById('periodic-photo-type').value;
+      const title = document.getElementById('periodic-photo-title').value || type;
+
+      if (!fileInput.files || fileInput.files.length === 0) { showToast('Selecciona una imagen'); return; }
+
+      const reader = new FileReader();
+      reader.readAsDataURL(fileInput.files[0]);
+      reader.onload = e => {
+        appData.periodicPhotos.push({
+          id: Date.now(),
+          date,
+          type,
+          title,
+          dataUrl: e.target.result
+        });
+        saveDatabase(); closeModal('modal-periodic-photo'); renderAllViews(); showToast('Gráfica guardada en la bóveda');
+      };
+    }
+
+    function deletePeriodicPhoto(id) {
+      appData.periodicPhotos = appData.periodicPhotos.filter(x => x.id !== id);
+      saveDatabase(); renderAllViews();
     }
 
     // ESTUDIO CRUD
@@ -670,7 +734,7 @@
       saveDatabase(); renderAllViews();
     }
 
-    // LEAKS CRUD & PROGRESS
+    // LEAKS CRUD
     function openModalLeak() {
       document.getElementById('leak-title').value = '';
       document.getElementById('leak-initial').value = '';
@@ -739,13 +803,15 @@
       saveDatabase(); renderAllViews();
     }
 
-    // RENDER VIEWS & GOALS PROGRESS
+    // RENDER VIEWS
     function renderAllViews() {
       renderDailyGoalsProgress();
+      renderDailyRitualView();
       renderGrindView();
       renderStudyView();
       renderLeaksView();
       renderTridentsView();
+      renderPeriodicPhotos();
       applyReportFilters();
     }
 
@@ -795,6 +861,50 @@
       `;
     }
 
+    function renderDailyRitualView() {
+      const container = document.getElementById('daily-ritual-view');
+      if (!container) return;
+
+      const session = appData.grindSessions.find(s => s.date === currentDate);
+      if (!session) {
+        container.innerHTML = `
+          <div class="col-span-2 bg-white border-poker rounded-3xl p-8 text-center space-y-3">
+            <p class="text-stone-500 text-xs font-bold">No hay sesión registrada para esta fecha (${currentDate}).</p>
+            <button onclick="openModalGrind()" class="px-5 py-2.5 bg-[#c97b84] text-white rounded-xl text-xs font-black shadow-sm cursor-pointer">+ Registrar Sesión, Ritual y Gráfica</button>
+          </div>`;
+        return;
+      }
+
+      let imgHtml = session.imageUrl ? `<div class="mt-3"><p class="text-[11px] font-bold text-stone-500 mb-1">📸 Gráfica adjunta:</p><img src="${session.imageUrl}" class="w-full h-40 object-cover rounded-xl border border-stone-200"></div>` : '';
+
+      container.innerHTML = `
+        <div class="bg-white border-poker rounded-3xl p-6 shadow-sm space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-stone-100">
+            <h3 class="text-base font-black text-stone-800">☀️ Warm-up Registrado</h3>
+            <button onclick="openModalGrind()" class="text-xs font-bold text-[#c97b84] hover:underline">✏️ Editar</button>
+          </div>
+          <div class="space-y-2 text-xs text-stone-700 font-bold">
+            <p>${session.wuEnv ? '✅' : '❌'} Espacio ordenado y programas abiertos</p>
+            <p>${session.wuMind ? '✅' : '❌'} Activación realizada (respiración / meditación)</p>
+            <p>⚡ Energía inicial: <span class="text-[#c97b84]">${session.wuEnergy}/10</span> | Enfoque: <span class="text-[#c97b84]">${session.wuFocus}/10</span></p>
+            <p class="font-normal italic text-stone-600">🎯 Intención: "${session.wuIntention || 'Ninguna'}"</p>
+          </div>
+          ${imgHtml}
+        </div>
+
+        <div class="bg-white border-poker rounded-3xl p-6 shadow-sm space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-stone-100">
+            <h3 class="text-base font-black text-stone-800">🌙 Cool-down & Cierre</h3>
+            <button onclick="openModalGrind()" class="text-xs font-bold text-[#c97b84] hover:underline">✏️ Editar</button>
+          </div>
+          <div class="space-y-2 text-xs text-stone-700">
+            <p><strong>Sensaciones:</strong> ${session.cdSensations || 'Sin registrar'}</p>
+            <p><strong>Alertas de tilt/fatiga:</strong> ${session.cdTilt || 'Ninguna'}</p>
+            <p><strong>Ganancias / EV:</strong> ${session.notes || 'Sin registrar'}</p>
+          </div>
+        </div>`;
+    }
+
     function renderGrindView() {
       const list = document.getElementById('grind-sessions-list');
       const empty = document.getElementById('grind-empty');
@@ -804,16 +914,40 @@
       empty?.classList.add('hidden');
 
       [...appData.grindSessions].sort((a,b) => b.date.localeCompare(a.date)).forEach(s => {
+        let thumb = s.imageUrl ? `<img src="${s.imageUrl}" class="w-16 h-12 object-cover rounded-lg border border-stone-200">` : '';
         list.innerHTML += `
           <div class="p-4 bg-[#f7f4f0] border border-stone-200 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs">
-            <div>
-              <strong class="text-sm font-black text-stone-800">📅 ${s.date}</strong>
-              <p class="text-stone-600 mt-1">🎮 ${s.games} games | ⏱️ Grind: ${s.hours}h | 📚 Estudio: ${s.studyHours}h | 📈 cEV: ${s.cev}</p>
-              ${s.notes ? `<p class="text-stone-500 italic mt-1">Notas: ${s.notes}</p>` : ''}
+            <div class="flex items-center space-x-3">
+              ${thumb}
+              <div>
+                <strong class="text-sm font-black text-stone-800">📅 ${s.date}</strong>
+                <p class="text-stone-600 mt-1">🎮 ${s.games} games | ⏱️ Grind: ${s.hours}h | 📚 Estudio: ${s.studyHours}h | 📈 cEV: ${s.cev}</p>
+              </div>
             </div>
             <div class="flex items-center gap-2">
               <button onclick="editGrindSession(${s.id})" class="px-3 py-1.5 bg-white border border-stone-300 rounded-xl font-bold text-stone-700">✏️ Editar</button>
               <button onclick="deleteGrindSession(${s.id})" class="px-3 py-1.5 bg-red-50 text-red-600 rounded-xl font-bold">✕ Borrar</button>
+            </div>
+          </div>`;
+      });
+    }
+
+    function renderPeriodicPhotos() {
+      const gallery = document.getElementById('periodic-photos-gallery');
+      const empty = document.getElementById('periodic-photos-empty');
+      if (!gallery) return;
+      gallery.innerHTML = '';
+      if (appData.periodicPhotos.length === 0) { empty?.classList.remove('hidden'); return; }
+      empty?.classList.add('hidden');
+
+      [...appData.periodicPhotos].sort((a,b) => b.date.localeCompare(a.date)).forEach(p => {
+        gallery.innerHTML += `
+          <div class="bg-[#f7f4f0] border border-stone-200 rounded-2xl p-2.5 space-y-2 relative">
+            <span class="absolute top-4 left-4 bg-[#c97b84] text-white text-[9px] font-black px-2 py-0.5 rounded-md uppercase">${p.type}</span>
+            <img src="${p.dataUrl}" class="w-full h-32 object-cover rounded-xl border border-stone-200">
+            <div class="flex justify-between items-center text-xs">
+              <div><p class="font-black text-stone-800 truncate">${p.title}</p><p class="text-[10px] text-stone-500">${p.date}</p></div>
+              <button onclick="deletePeriodicPhoto(${p.id})" class="text-red-500 font-bold">✕</button>
             </div>
           </div>`;
       });
