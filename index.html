@@ -87,7 +87,7 @@
           <h1 class="text-base font-black tracking-wider uppercase text-white leading-none flex items-center gap-2">
             MARPK <span class="text-[#f7d9e0] text-xs font-bold">♠️ ♥️ ♣️ ♦️</span>
           </h1>
-          <p class="text-[11px] font-medium text-[#f0e4eb] italic mt-0.5">"- No elijo las cartas, pero sí cómo jugarlas."</p>
+          <p class="text-[11px] font-medium text-[#f0e4eb] italic mt-0.5">"No elijo las cartas, pero sí cómo jugarlas."</p>
         </div>
       </div>
 
@@ -1281,8 +1281,8 @@
       const report = `♠️ *REPORTE MARPK (${from} al ${to})* ♠️\n\n` +
         `⏱️ Horas de Grind: ${gH}\n` +
         `📚 Horas de Estudio: ${sH}\n` +
-        `🎮 Total Games: ${games}\n` +
-        `📈 cEV Ponderado: ${cev}\n`;
+        `🎮 Total Games: ${games}\n` ;
+        
 
       navigator.clipboard.writeText(report).then(() => showToast('¡Reporte copiado al portapapeles! 📋'));
     }
