@@ -21,35 +21,39 @@
 
     * { box-sizing: border-box; font-family: var(--font-main); }
     
-    /* Fondo espacial morado elegante tipo 3D Glassmorphism */
+    /* Fondo con degradados espaciales vibrantes y luces ambientales estilo 3D UI */
     body {
-      background: linear-gradient(135deg, #1b1224 0%, #2b1d3a 50%, #3d2b52 100%);
-      color: #f3eef7;
+      background: 
+        radial-gradient(circle at 15% 15%, rgba(176, 136, 204, 0.35) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(201, 123, 132, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #180d24 0%, #311c4d 40%, #522d7a 100%);
+      color: #f7f2fb;
       min-height: 100vh;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
+      background-attachment: fixed;
     }
 
     .hidden { display: none !important; }
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: rgba(25, 15, 35, 0.5); }
-    ::-webkit-scrollbar-thumb { background: #8c729b; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb { background: #b088cc; border-radius: 999px; }
 
-    /* Efecto 3D Glassmorphism para Tarjetas y Contenedores */
+    /* Efecto 3D Glassmorphism Avanzado con Bordes Luminosos */
     .glass-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
 
     .glass-card-solid {
-      background: rgba(43, 29, 58, 0.85);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(214, 182, 235, 0.15);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      background: linear-gradient(135deg, rgba(56, 33, 84, 0.85) 0%, rgba(41, 22, 64, 0.9) 100%);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(214, 182, 235, 0.22);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.25);
     }
 
     .nav-btn {
@@ -57,46 +61,46 @@
       cursor: pointer;
     }
     .nav-btn.active {
-      background: linear-gradient(135deg, #b088cc 0%, #8c5fb8 100%) !important;
+      background: linear-gradient(135deg, #c49ce3 0%, #9c6cc7 100%) !important;
       color: #ffffff !important;
       font-weight: 800;
-      box-shadow: 0 8px 20px rgba(140, 95, 184, 0.5), inset 0 1px 0 rgba(255,255,255,0.4);
+      box-shadow: 0 10px 25px rgba(156, 108, 199, 0.6), inset 0 1px 0 rgba(255,255,255,0.5);
     }
 
     .modal-overlay {
-      background-color: rgba(18, 10, 26, 0.75);
-      backdrop-filter: blur(8px);
+      background-color: rgba(18, 10, 26, 0.8);
+      backdrop-filter: blur(10px);
       z-index: 99999 !important;
     }
 
     input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-[#b088cc] selection:text-white">
+<body class="min-h-screen flex flex-col antialiased selection:bg-[#c49ce3] selection:text-white">
 
   <!-- HEADER & TOP NAVIGATION -->
-  <header class="glass-card-solid sticky top-0 z-40 border-b border-white/10">
+  <header class="glass-card-solid sticky top-0 z-40 border-b border-white/15">
     <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#b088cc] to-[#e0c3fc] flex items-center justify-center font-black text-[#2b1d3a] text-base shadow-lg">MK</div>
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#c49ce3] to-[#ebd4fc] flex items-center justify-center font-black text-[#2b1d3a] text-base shadow-lg">MK</div>
         <div>
           <h1 class="text-base font-black tracking-wider uppercase text-white leading-none">MAPKR</h1>
-          <span class="text-[10px] font-bold text-[#d6b6eb] tracking-widest uppercase">Professional Poker Performance</span>
+          <span class="text-[10px] font-bold text-[#e1c5f5] tracking-widest uppercase">Professional Poker Performance</span>
         </div>
       </div>
 
-      <nav class="flex flex-wrap items-center justify-center gap-1.5 bg-black/20 p-1.5 rounded-2xl border border-white/10">
-        <button onclick="switchTab('resumen')" id="tab-btn-resumen" class="nav-btn active px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-300 hover:text-white">📊 Resumen & Ritual</button>
-        <button onclick="switchTab('grind')" id="tab-btn-grind" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-300 hover:text-white">🃏 Sesiones</button>
-        <button onclick="switchTab('estudio')" id="tab-btn-estudio" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-300 hover:text-white">📚 Estudio & Manos</button>
-        <button onclick="switchTab('leaks')" id="tab-btn-leaks" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-300 hover:text-white">🎯 Leaks & Tracking</button>
-        <button onclick="switchTab('tridents')" id="tab-btn-tridents" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-300 hover:text-white">⚡ Tridents</button>
-        <button onclick="switchTab('reportes')" id="tab-btn-reportes" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-300 hover:text-white">📈 Reportes & Gráficas</button>
+      <nav class="flex flex-wrap items-center justify-center gap-1.5 bg-black/25 p-1.5 rounded-2xl border border-white/15">
+        <button onclick="switchTab('resumen')" id="tab-btn-resumen" class="nav-btn active px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-200 hover:text-white">📊 Resumen & Ritual</button>
+        <button onclick="switchTab('grind')" id="tab-btn-grind" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-200 hover:text-white">🃏 Sesiones</button>
+        <button onclick="switchTab('estudio')" id="tab-btn-estudio" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-200 hover:text-white">📚 Estudio & Manos</button>
+        <button onclick="switchTab('leaks')" id="tab-btn-leaks" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-200 hover:text-white">🎯 Leaks & Tracking</button>
+        <button onclick="switchTab('tridents')" id="tab-btn-tridents" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-200 hover:text-white">⚡ Tridents</button>
+        <button onclick="switchTab('reportes')" id="tab-btn-reportes" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-200 hover:text-white">📈 Reportes & Gráficas</button>
       </nav>
 
       <div class="flex items-center space-x-2">
         <span id="cloud-badge" class="text-[9px] font-extrabold px-2.5 py-1 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-800">☁️ Sincronizado</span>
-        <button onclick="downloadBackup()" class="p-2 rounded-xl bg-black/20 text-stone-300 hover:text-white text-xs font-bold border border-white/10" title="Backup JSON">💾</button>
+        <button onclick="downloadBackup()" class="p-2 rounded-xl bg-black/25 text-stone-200 hover:text-white text-xs font-bold border border-white/15" title="Backup JSON">💾</button>
       </div>
     </div>
   </header>
@@ -107,37 +111,37 @@
     <!-- SELECTOR DE FECHA GLOBAL DIARIA -->
     <div class="glass-card rounded-3xl p-4 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center space-x-3">
-        <span class="text-xs font-black uppercase text-stone-300 tracking-wider">📅 Día Seleccionado:</span>
-        <input type="date" id="global-date" onchange="handleGlobalDateChange(this.value)" class="bg-black/30 border border-white/20 rounded-xl px-3 py-1.5 text-xs font-black text-white focus:outline-none">
+        <span class="text-xs font-black uppercase text-stone-200 tracking-wider">📅 Día Seleccionado:</span>
+        <input type="date" id="global-date" onchange="handleGlobalDateChange(this.value)" class="bg-black/35 border border-white/25 rounded-xl px-3 py-1.5 text-xs font-black text-white focus:outline-none">
       </div>
       <div class="flex items-center gap-2">
-        <button onclick="openModalGrind()" class="px-4 py-2 bg-gradient-to-r from-[#b088cc] to-[#8c5fb8] hover:opacity-90 text-white font-extrabold text-xs rounded-xl shadow-lg transition cursor-pointer">+ Registrar / Editar Sesión</button>
+        <button onclick="openModalGrind()" class="px-4 py-2 bg-gradient-to-r from-[#c49ce3] to-[#9c6cc7] hover:opacity-90 text-white font-extrabold text-xs rounded-xl shadow-lg transition cursor-pointer">+ Registrar / Editar Sesión</button>
       </div>
     </div>
 
-    <!-- PANE 1: RESUMEN & RITUAL (OPTIMIZADO PARA CAPTURA) -->
+    <!-- PANE 1: RESUMEN & RITUAL (IDEAL PARA CAPTURA) -->
     <section id="pane-resumen" class="tab-pane space-y-6">
       
       <!-- ESTADO DE METAS DE PÓKER -->
       <div class="glass-card-solid rounded-3xl p-6 space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-white/10">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-white/15">
           <div>
             <h3 class="text-base font-black text-white">🎯 Metas Principales de Póker</h3>
-            <p class="text-xs text-stone-400">Progreso automático en tiempo real</p>
+            <p class="text-xs text-stone-300">Progreso automático en tiempo real</p>
           </div>
-          <button onclick="openModalGoalsConfig()" class="text-xs font-extrabold text-[#d6b6eb] hover:underline cursor-pointer">⚙️ Configurar Metas Base</button>
+          <button onclick="openModalGoalsConfig()" class="text-xs font-extrabold text-[#e1c5f5] hover:underline cursor-pointer">⚙️ Configurar Metas Base</button>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="daily-goals-progress"></div>
       </div>
 
       <!-- HÁBITOS & METAS CON HABIT TRACKER VISUAL (L-M-X-J-V-S-D) -->
       <div class="glass-card-solid rounded-3xl p-6 space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-white/10">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-white/15">
           <div>
             <h3 class="text-base font-black text-white">✨ Hábitos & Metas (Habit Tracker Visual)</h3>
-            <p class="text-xs text-stone-400">Tus registros diarios y seguimiento semanal</p>
+            <p class="text-xs text-stone-300">Tus registros diarios y seguimiento semanal</p>
           </div>
-          <button onclick="openModalCustomGoal()" class="px-4 py-2 bg-gradient-to-r from-[#b088cc] to-[#8c5fb8] hover:opacity-90 text-white font-bold text-xs rounded-xl shadow-lg cursor-pointer">+ Añadir Meta o Hábito</button>
+          <button onclick="openModalCustomGoal()" class="px-4 py-2 bg-gradient-to-r from-[#c49ce3] to-[#9c6cc7] hover:opacity-90 text-white font-bold text-xs rounded-xl shadow-lg cursor-pointer">+ Añadir Meta o Hábito</button>
         </div>
         <div class="space-y-4" id="custom-goals-container"></div>
         <p id="custom-goals-empty" class="text-xs text-stone-400 text-center py-4">No hay metas o hábitos creados aún.</p>
@@ -152,9 +156,9 @@
       <div class="glass-card-solid rounded-3xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 class="text-xl font-black text-white">Historial de Sesiones & Gráficas</h2>
-          <p class="text-xs text-stone-400 mt-0.5">Todas tus jornadas registradas con sus capturas</p>
+          <p class="text-xs text-stone-300 mt-0.5">Todas tus jornadas registradas con sus capturas</p>
         </div>
-        <button onclick="openModalGrind()" class="px-4 py-2 bg-[#b088cc] text-white font-extrabold text-xs rounded-xl shadow-lg cursor-pointer">+ Nueva Sesión</button>
+        <button onclick="openModalGrind()" class="px-4 py-2 bg-[#c49ce3] text-white font-extrabold text-xs rounded-xl shadow-lg cursor-pointer">+ Nueva Sesión</button>
       </div>
 
       <div class="glass-card-solid rounded-3xl p-6">
@@ -168,9 +172,9 @@
       <div class="glass-card-solid rounded-3xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 class="text-xl font-black text-white">Bitácora de Estudio & Manos Marcadas</h2>
-          <p class="text-xs text-stone-400">Tus revisiones en GTO Wizard / Solvers</p>
+          <p class="text-xs text-stone-300">Tus revisiones en GTO Wizard / Solvers</p>
         </div>
-        <button onclick="openModalStudy()" class="px-4 py-2 bg-[#b088cc] text-white font-extrabold text-xs rounded-xl shadow-lg cursor-pointer">+ Nueva Entrada de Estudio</button>
+        <button onclick="openModalStudy()" class="px-4 py-2 bg-[#c49ce3] text-white font-extrabold text-xs rounded-xl shadow-lg cursor-pointer">+ Nueva Entrada de Estudio</button>
       </div>
 
       <div class="glass-card-solid rounded-3xl p-6">
@@ -184,9 +188,9 @@
       <div class="glass-card-solid rounded-3xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 class="text-xl font-black text-white">Tracker de Leaks & Correcciones</h2>
-          <p class="text-xs text-stone-400">Audita tus estadísticas y evalúa tu progreso numérico</p>
+          <p class="text-xs text-stone-300">Audita tus estadísticas y evalúa tu progreso numérico</p>
         </div>
-        <button onclick="openModalLeak()" class="px-4 py-2 bg-[#b088cc] text-white font-extrabold text-xs rounded-xl shadow-lg cursor-pointer">+ Nuevo Leak a Corregir</button>
+        <button onclick="openModalLeak()" class="px-4 py-2 bg-[#c49ce3] text-white font-extrabold text-xs rounded-xl shadow-lg cursor-pointer">+ Nuevo Leak a Corregir</button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="leaks-container"></div>
@@ -198,9 +202,9 @@
       <div class="glass-card-solid rounded-3xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 class="text-xl font-black text-white">Control de Tridents & Extras</h2>
-          <p class="text-xs text-stone-400">Audita la rentabilidad de formatos especiales</p>
+          <p class="text-xs text-stone-300">Audita la rentabilidad de formatos especiales</p>
         </div>
-        <button onclick="openModalTrident()" class="px-4 py-2 bg-[#b088cc] text-white font-extrabold text-xs rounded-xl shadow-lg cursor-pointer">+ Registrar Tridents</button>
+        <button onclick="openModalTrident()" class="px-4 py-2 bg-[#c49ce3] text-white font-extrabold text-xs rounded-xl shadow-lg cursor-pointer">+ Registrar Tridents</button>
       </div>
 
       <div class="glass-card-solid rounded-3xl p-6">
@@ -212,49 +216,49 @@
     <!-- PANE 6: REPORTES & GRÁFICAS -->
     <section id="pane-reportes" class="tab-pane space-y-6 hidden">
       <div class="glass-card-solid rounded-3xl p-6 space-y-6">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/15">
           <div>
             <h2 class="text-xl font-black text-white">Panel de Métricas & Bóveda de Gráficas</h2>
-            <p class="text-xs text-stone-400">Filtra tus números o guarda tus gráficas semanales y mensuales</p>
+            <p class="text-xs text-stone-300">Filtra tus números o guarda tus gráficas semanales y mensuales</p>
           </div>
-          <button onclick="copyWeeklyReport()" class="px-4 py-2 bg-[#b088cc] text-white font-bold text-xs rounded-xl shadow-lg hover:opacity-90 cursor-pointer">📋 Copiar Reporte General</button>
+          <button onclick="copyWeeklyReport()" class="px-4 py-2 bg-[#c49ce3] text-white font-bold text-xs rounded-xl shadow-lg hover:opacity-90 cursor-pointer">📋 Copiar Reporte General</button>
         </div>
 
-        <div class="flex flex-wrap items-center gap-3 bg-black/20 p-4 rounded-2xl border border-white/10">
+        <div class="flex flex-wrap items-center gap-3 bg-black/25 p-4 rounded-2xl border border-white/15">
           <div class="flex items-center space-x-2">
-            <span class="text-xs font-bold text-stone-300">Desde:</span>
-            <input type="date" id="report-from" class="bg-black/30 border border-white/20 rounded-xl px-3 py-1.5 text-xs font-bold text-white">
+            <span class="text-xs font-bold text-stone-200">Desde:</span>
+            <input type="date" id="report-from" class="bg-black/35 border border-white/25 rounded-xl px-3 py-1.5 text-xs font-bold text-white">
           </div>
           <div class="flex items-center space-x-2">
-            <span class="text-xs font-bold text-stone-300">Hasta:</span>
-            <input type="date" id="report-to" class="bg-black/30 border border-white/20 rounded-xl px-3 py-1.5 text-xs font-bold text-white">
+            <span class="text-xs font-bold text-stone-200">Hasta:</span>
+            <input type="date" id="report-to" class="bg-black/35 border border-white/25 rounded-xl px-3 py-1.5 text-xs font-bold text-white">
           </div>
-          <button onclick="applyReportFilters()" class="px-5 py-2 bg-[#b088cc] text-white font-extrabold text-xs rounded-xl shadow-lg cursor-pointer">🔍 Filtrar</button>
+          <button onclick="applyReportFilters()" class="px-5 py-2 bg-[#c49ce3] text-white font-extrabold text-xs rounded-xl shadow-lg cursor-pointer">🔍 Filtrar</button>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
           <div class="glass-card rounded-2xl p-4 text-center">
-            <span class="text-[10px] font-bold text-stone-400 uppercase">Horas de Grind</span>
+            <span class="text-[10px] font-bold text-stone-300 uppercase">Horas de Grind</span>
             <p class="text-xl font-black text-white mt-1" id="kpi-grind-hours">0.0 h</p>
           </div>
           <div class="glass-card rounded-2xl p-4 text-center">
-            <span class="text-[10px] font-bold text-stone-400 uppercase">Horas de Estudio</span>
-            <p class="text-xl font-black text-[#d6b6eb] mt-1" id="kpi-study-hours">0.0 h</p>
+            <span class="text-[10px] font-bold text-stone-300 uppercase">Horas de Estudio</span>
+            <p class="text-xl font-black text-[#e1c5f5] mt-1" id="kpi-study-hours">0.0 h</p>
           </div>
           <div class="glass-card rounded-2xl p-4 text-center">
-            <span class="text-[10px] font-bold text-stone-400 uppercase">Total Games</span>
+            <span class="text-[10px] font-bold text-stone-300 uppercase">Total Games</span>
             <p class="text-xl font-black text-white mt-1" id="kpi-total-games">0</p>
           </div>
           <div class="glass-card rounded-2xl p-4 text-center">
-            <span class="text-[10px] font-bold text-stone-400 uppercase">cEV Ponderado</span>
+            <span class="text-[10px] font-bold text-stone-300 uppercase">cEV Ponderado</span>
             <p class="text-xl font-black text-emerald-400 mt-1" id="kpi-avg-cev">0.0</p>
           </div>
         </div>
 
-        <div class="pt-6 border-t border-white/10 space-y-4">
+        <div class="pt-6 border-t border-white/15 space-y-4">
           <div class="flex justify-between items-center">
             <h3 class="text-base font-black text-white">📈 Bóveda de Gráficas (Semanal / Mensual)</h3>
-            <button onclick="openModalPeriodicPhoto()" class="px-4 py-2 bg-[#b088cc] text-white font-bold text-xs rounded-xl shadow-lg cursor-pointer">+ Subir Gráfica Periódica</button>
+            <button onclick="openModalPeriodicPhoto()" class="px-4 py-2 bg-[#c49ce3] text-white font-bold text-xs rounded-xl shadow-lg cursor-pointer">+ Subir Gráfica Periódica</button>
           </div>
           <div id="periodic-photos-gallery" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
           <p id="periodic-photos-empty" class="text-xs text-stone-400 text-center py-4">No hay gráficas semanales o mensuales adjuntas.</p>
@@ -267,20 +271,20 @@
   <!-- MODAL CONFIGURAR METAS BASE -->
   <div id="modal-goals-config" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
     <div class="glass-card-solid rounded-3xl max-w-sm w-full p-6 space-y-4 border border-white/20">
-      <div class="flex items-center justify-between pb-2 border-b border-white/10">
+      <div class="flex items-center justify-between pb-2 border-b border-white/15">
         <h3 class="text-base font-black text-white">⚙️ Configurar Metas Póker</h3>
         <button onclick="closeModal('modal-goals-config')" class="text-stone-400 font-bold cursor-pointer">✕</button>
       </div>
       <div class="space-y-3 text-xs">
         <div class="grid grid-cols-3 gap-2">
-          <div><label class="font-bold text-stone-400 block mb-1">Horas Grind</label><input type="number" step="0.5" id="cfg-target-hours" class="w-full bg-black/35 border border-white/20 rounded-xl px-2 py-1.5 font-bold text-center text-white"></div>
-          <div><label class="font-bold text-stone-400 block mb-1">Horas Estudio</label><input type="number" step="0.5" id="cfg-target-study" class="w-full bg-black/35 border border-white/20 rounded-xl px-2 py-1.5 font-bold text-center text-white"></div>
-          <div><label class="font-bold text-stone-400 block mb-1">Games</label><input type="number" id="cfg-target-games" class="w-full bg-black/35 border border-white/20 rounded-xl px-2 py-1.5 font-bold text-center text-white"></div>
+          <div><label class="font-bold text-stone-300 block mb-1">Horas Grind</label><input type="number" step="0.5" id="cfg-target-hours" class="w-full bg-black/40 border border-white/25 rounded-xl px-2 py-1.5 font-bold text-center text-white"></div>
+          <div><label class="font-bold text-stone-300 block mb-1">Horas Estudio</label><input type="number" step="0.5" id="cfg-target-study" class="w-full bg-black/40 border border-white/25 rounded-xl px-2 py-1.5 font-bold text-center text-white"></div>
+          <div><label class="font-bold text-stone-300 block mb-1">Games</label><input type="number" id="cfg-target-games" class="w-full bg-black/40 border border-white/25 rounded-xl px-2 py-1.5 font-bold text-center text-white"></div>
         </div>
       </div>
       <div class="pt-2 flex justify-end space-x-2">
-        <button onclick="closeModal('modal-goals-config')" class="px-4 py-2 border border-white/20 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
-        <button onclick="saveGoalsConfig()" class="px-4 py-2 bg-[#b088cc] text-white rounded-xl text-xs font-black cursor-pointer">Guardar</button>
+        <button onclick="closeModal('modal-goals-config')" class="px-4 py-2 border border-white/25 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
+        <button onclick="saveGoalsConfig()" class="px-4 py-2 bg-[#c49ce3] text-white rounded-xl text-xs font-black cursor-pointer">Guardar</button>
       </div>
     </div>
   </div>
@@ -288,43 +292,43 @@
   <!-- MODAL AÑADIR META O HÁBITO -->
   <div id="modal-custom-goal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
     <div class="glass-card-solid rounded-3xl max-w-md w-full p-6 space-y-4 border border-white/20">
-      <div class="flex items-center justify-between pb-2 border-b border-white/10">
+      <div class="flex items-center justify-between pb-2 border-b border-white/15">
         <h3 class="text-base font-black text-white">✨ Añadir Meta o Hábito</h3>
         <button onclick="closeModal('modal-custom-goal')" class="text-stone-400 font-bold cursor-pointer">✕</button>
       </div>
       <div class="space-y-3 text-xs">
         <div>
-          <label class="font-bold text-stone-400 block mb-1">Título de la Meta / Hábito</label>
-          <input type="text" id="cg-title" placeholder="Ej. Meta Semanal de Grind" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
+          <label class="font-bold text-stone-300 block mb-1">Título de la Meta / Hábito</label>
+          <input type="text" id="cg-title" placeholder="Ej. Meta Semanal de Grind" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
         </div>
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="font-bold text-stone-400 block mb-1">Tipo de Métrica</label>
-            <select id="cg-type" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
-              <option value="grind_hours" class="bg-[#2b1d3a]">⏱️ Horas de Grind</option>
-              <option value="study_hours" class="bg-[#2b1d3a]">📚 Horas de Estudio</option>
-              <option value="games" class="bg-[#2b1d3a]">🎮 Total Games</option>
-              <option value="custom" class="bg-[#2b1d3a]">✍️ Hábito / Otro Libre</option>
+            <label class="font-bold text-stone-300 block mb-1">Tipo de Métrica</label>
+            <select id="cg-type" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
+              <option value="grind_hours" class="bg-[#382154]">⏱️ Horas de Grind</option>
+              <option value="study_hours" class="bg-[#382154]">📚 Horas de Estudio</option>
+              <option value="games" class="bg-[#382154]">🎮 Total Games</option>
+              <option value="custom" class="bg-[#382154]">✍️ Hábito / Otro Libre</option>
             </select>
           </div>
           <div>
-            <label class="font-bold text-stone-400 block mb-1">Frecuencia</label>
-            <select id="cg-freq" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
-              <option value="Diaria" class="bg-[#2b1d3a]">Diaria</option>
-              <option value="Semanal" class="bg-[#2b1d3a]">Semanal</option>
-              <option value="Quincenal" class="bg-[#2b1d3a]">Quincenal</option>
-              <option value="Mensual" class="bg-[#2b1d3a]">Mensual</option>
+            <label class="font-bold text-stone-300 block mb-1">Frecuencia</label>
+            <select id="cg-freq" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
+              <option value="Diaria" class="bg-[#382154]">Diaria</option>
+              <option value="Semanal" class="bg-[#382154]">Semanal</option>
+              <option value="Quincenal" class="bg-[#382154]">Quincenal</option>
+              <option value="Mensual" class="bg-[#382154]">Mensual</option>
             </select>
           </div>
         </div>
         <div>
-          <label class="font-bold text-stone-400 block mb-1">Valor Objetivo (Meta numérica o 1 para hábito)</label>
-          <input type="number" step="0.5" id="cg-target" placeholder="Ej. 30" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
+          <label class="font-bold text-stone-300 block mb-1">Valor Objetivo (Meta numérica)</label>
+          <input type="number" step="0.5" id="cg-target" placeholder="Ej. 30" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
         </div>
       </div>
       <div class="pt-2 flex justify-end space-x-2">
-        <button onclick="closeModal('modal-custom-goal')" class="px-4 py-2 border border-white/20 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
-        <button onclick="saveCustomGoal()" class="px-4 py-2 bg-[#b088cc] text-white rounded-xl text-xs font-black cursor-pointer">Crear Meta</button>
+        <button onclick="closeModal('modal-custom-goal')" class="px-4 py-2 border border-white/25 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
+        <button onclick="saveCustomGoal()" class="px-4 py-2 bg-[#c49ce3] text-white rounded-xl text-xs font-black cursor-pointer">Crear Meta</button>
       </div>
     </div>
   </div>
@@ -332,105 +336,105 @@
   <!-- MODAL UNIFICADO (WARM-UP + GRIND + COOL-DOWN + IMAGEN) -->
   <div id="modal-grind" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
     <div class="glass-card-solid rounded-3xl max-w-xl w-full p-6 space-y-5 max-h-[90vh] overflow-y-auto border border-white/20">
-      <div class="flex items-center justify-between pb-2 border-b border-white/10">
+      <div class="flex items-center justify-between pb-2 border-b border-white/15">
         <h3 class="text-base font-black text-white">♠️ Registro Diario Completo con Gráfica</h3>
         <button onclick="closeModal('modal-grind')" class="text-stone-400 font-bold cursor-pointer">✕</button>
       </div>
       <div class="space-y-4 text-xs">
         <input type="hidden" id="grind-edit-id">
         <div>
-          <label class="font-bold text-stone-400 block mb-1">Fecha de la Sesión</label>
-          <input type="date" id="grind-date" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
+          <label class="font-bold text-stone-300 block mb-1">Fecha de la Sesión</label>
+          <input type="date" id="grind-date" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
         </div>
 
-        <div class="bg-black/20 p-4 rounded-2xl border border-white/10 space-y-3">
-          <h4 class="font-black text-[#d6b6eb] text-xs uppercase tracking-wider">☀️ Warm-up (Pre-sesión)</h4>
+        <div class="bg-black/25 p-4 rounded-2xl border border-white/15 space-y-3">
+          <h4 class="font-black text-[#e1c5f5] text-xs uppercase tracking-wider">☀️ Warm-up (Pre-sesión)</h4>
           <div class="space-y-2">
             <label class="flex items-center space-x-2 cursor-pointer">
-              <input type="checkbox" id="modal-wu-env" class="accent-[#b088cc] w-4 h-4 rounded">
-              <span class="font-bold text-stone-300">Espacio ordenado y programas abiertos</span>
+              <input type="checkbox" id="modal-wu-env" class="accent-[#c49ce3] w-4 h-4 rounded">
+              <span class="font-bold text-stone-200">Espacio ordenado y programas abiertos</span>
             </label>
             <label class="flex items-center space-x-2 cursor-pointer">
-              <input type="checkbox" id="modal-wu-mind" class="accent-[#b088cc] w-4 h-4 rounded">
-              <span class="font-bold text-stone-300">Activación realizada (respiración / meditación)</span>
+              <input type="checkbox" id="modal-wu-mind" class="accent-[#c49ce3] w-4 h-4 rounded">
+              <span class="font-bold text-stone-200">Activación realizada (respiración / meditación)</span>
             </label>
           </div>
           <div class="grid grid-cols-2 gap-2">
             <div>
-              <label class="font-bold text-stone-400 block mb-1">Energía Inicial (1-10)</label>
-              <input type="number" min="1" max="10" id="modal-wu-energy" value="8" class="w-full bg-black/35 border border-white/20 rounded-xl px-2 py-1.5 font-bold text-center text-white">
+              <label class="font-bold text-stone-300 block mb-1">Energía Inicial (1-10)</label>
+              <input type="number" min="1" max="10" id="modal-wu-energy" value="8" class="w-full bg-black/40 border border-white/25 rounded-xl px-2 py-1.5 font-bold text-center text-white">
             </div>
             <div>
-              <label class="font-bold text-stone-400 block mb-1">Enfoque Inicial (1-10)</label>
-              <input type="number" min="1" max="10" id="modal-wu-focus" value="8" class="w-full bg-black/35 border border-white/20 rounded-xl px-2 py-1.5 font-bold text-center text-white">
+              <label class="font-bold text-stone-300 block mb-1">Enfoque Inicial (1-10)</label>
+              <input type="number" min="1" max="10" id="modal-wu-focus" value="8" class="w-full bg-black/40 border border-white/25 rounded-xl px-2 py-1.5 font-bold text-center text-white">
             </div>
           </div>
-          <input type="text" id="modal-wu-intention" placeholder="Intención del día..." class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-medium text-white">
+          <input type="text" id="modal-wu-intention" placeholder="Intención del día..." class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-medium text-white">
         </div>
 
-        <div class="bg-black/20 p-4 rounded-2xl border border-white/10 space-y-3">
+        <div class="bg-black/25 p-4 rounded-2xl border border-white/15 space-y-3">
           <h4 class="font-black text-white text-xs uppercase tracking-wider">🃏 Métricas del Grind</h4>
           <div class="grid grid-cols-2 gap-2">
             <div>
-              <label class="font-bold text-stone-400 block mb-1">Horas de Grind</label>
-              <input type="number" step="0.1" id="grind-hours" placeholder="4.5" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
+              <label class="font-bold text-stone-300 block mb-1">Horas de Grind</label>
+              <input type="number" step="0.1" id="grind-hours" placeholder="4.5" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
             </div>
             <div>
-              <label class="font-bold text-stone-400 block mb-1">Total Games</label>
-              <input type="number" id="grind-games" placeholder="100" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
+              <label class="font-bold text-stone-300 block mb-1">Total Games</label>
+              <input type="number" id="grind-games" placeholder="100" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
             </div>
           </div>
           <div class="grid grid-cols-3 gap-2">
             <div>
-              <label class="font-bold text-stone-400 block mb-1">cEV</label>
-              <input type="number" step="0.1" id="grind-cev" placeholder="65.0" class="w-full bg-black/35 border border-white/20 rounded-xl px-2 py-1.5 font-bold text-white">
+              <label class="font-bold text-stone-300 block mb-1">cEV</label>
+              <input type="number" step="0.1" id="grind-cev" placeholder="65.0" class="w-full bg-black/40 border border-white/25 rounded-xl px-2 py-1.5 font-bold text-white">
             </div>
             <div>
-              <label class="font-bold text-stone-400 block mb-1">Focus Final</label>
-              <input type="number" min="1" max="10" id="grind-focus" value="8" class="w-full bg-black/35 border border-white/20 rounded-xl px-2 py-1.5 font-bold text-white">
+              <label class="font-bold text-stone-300 block mb-1">Focus Final</label>
+              <input type="number" min="1" max="10" id="grind-focus" value="8" class="w-full bg-black/40 border border-white/25 rounded-xl px-2 py-1.5 font-bold text-white">
             </div>
             <div>
-              <label class="font-bold text-stone-400 block mb-1">Mindset</label>
-              <input type="number" min="1" max="10" id="grind-mindset" value="8" class="w-full bg-black/35 border border-white/20 rounded-xl px-2 py-1.5 font-bold text-white">
+              <label class="font-bold text-stone-300 block mb-1">Mindset</label>
+              <input type="number" min="1" max="10" id="grind-mindset" value="8" class="w-full bg-black/40 border border-white/25 rounded-xl px-2 py-1.5 font-bold text-white">
             </div>
           </div>
           <div class="grid grid-cols-2 gap-2">
             <div>
-              <label class="font-bold text-stone-400 block mb-1">Horas de Estudio</label>
-              <input type="number" step="0.1" id="grind-study" placeholder="1.5" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
+              <label class="font-bold text-stone-300 block mb-1">Horas de Estudio</label>
+              <input type="number" step="0.1" id="grind-study" placeholder="1.5" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
             </div>
             <div>
-              <label class="font-bold text-stone-400 block mb-1">Manos Marcadas</label>
-              <input type="number" id="grind-hands" placeholder="12" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
+              <label class="font-bold text-stone-300 block mb-1">Manos Marcadas</label>
+              <input type="number" id="grind-hands" placeholder="12" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
             </div>
           </div>
         </div>
 
-        <div class="bg-black/20 p-4 rounded-2xl border border-white/10 space-y-3">
-          <h4 class="font-black text-[#d6b6eb] text-xs uppercase tracking-wider">🌙 Cool-down & Gráfica de Sesión</h4>
+        <div class="bg-black/25 p-4 rounded-2xl border border-white/15 space-y-3">
+          <h4 class="font-black text-[#e1c5f5] text-xs uppercase tracking-wider">🌙 Cool-down & Gráfica de Sesión</h4>
           <div>
-            <label class="font-bold text-stone-400 block mb-1">Sensaciones al terminar</label>
-            <textarea id="modal-cd-sensations" rows="2" placeholder="¿Cómo te sentiste..." class="w-full bg-black/35 border border-white/20 rounded-xl p-2 font-medium text-white"></textarea>
+            <label class="font-bold text-stone-300 block mb-1">Sensaciones al terminar</label>
+            <textarea id="modal-cd-sensations" rows="2" placeholder="¿Cómo te sentiste..." class="w-full bg-black/40 border border-white/25 rounded-xl p-2 font-medium text-white"></textarea>
           </div>
           <div class="grid grid-cols-2 gap-2">
             <div>
-              <label class="font-bold text-stone-400 block mb-1">Alertas de tilt</label>
-              <input type="text" id="modal-cd-tilt" placeholder="Spots de juego automático..." class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-medium text-white">
+              <label class="font-bold text-stone-300 block mb-1">Alertas de tilt</label>
+              <input type="text" id="modal-cd-tilt" placeholder="Spots de juego automático..." class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-medium text-white">
             </div>
             <div>
-              <label class="font-bold text-stone-400 block mb-1">Ganancias / EV (€/$)</label>
-              <input type="text" id="grind-notes" placeholder="Datos financieros..." class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-medium text-white">
+              <label class="font-bold text-stone-300 block mb-1">Ganancias / EV (€/$)</label>
+              <input type="text" id="grind-notes" placeholder="Datos financieros..." class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-medium text-white">
             </div>
           </div>
           <div>
-            <label class="font-bold text-stone-400 block mb-1">📸 Adjuntar Imagen / Gráfica de la Sesión</label>
-            <input type="file" id="grind-image-input" accept="image/*" class="w-full text-xs font-bold bg-black/35 p-2 rounded-xl border border-white/20 text-white">
+            <label class="font-bold text-stone-300 block mb-1">📸 Adjuntar Imagen / Gráfica de la Sesión</label>
+            <input type="file" id="grind-image-input" accept="image/*" class="w-full text-xs font-bold bg-black/40 p-2 rounded-xl border border-white/25 text-white">
           </div>
         </div>
       </div>
       <div class="pt-2 flex justify-end space-x-2">
-        <button onclick="closeModal('modal-grind')" class="px-4 py-2 border border-white/20 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
-        <button onclick="saveGrindSession()" class="px-4 py-2 bg-[#b088cc] text-white rounded-xl text-xs font-black cursor-pointer">Guardar Sesión Completa</button>
+        <button onclick="closeModal('modal-grind')" class="px-4 py-2 border border-white/25 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
+        <button onclick="saveGrindSession()" class="px-4 py-2 bg-[#c49ce3] text-white rounded-xl text-xs font-black cursor-pointer">Guardar Sesión Completa</button>
       </div>
     </div>
   </div>
@@ -438,22 +442,22 @@
   <!-- MODAL SUBIR GRÁFICA PERIÓDICA -->
   <div id="modal-periodic-photo" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
     <div class="glass-card-solid rounded-3xl max-w-sm w-full p-6 space-y-4 border border-white/20">
-      <div class="flex items-center justify-between pb-2 border-b border-white/10">
+      <div class="flex items-center justify-between pb-2 border-b border-white/15">
         <h3 class="text-base font-black text-white">Subir Gráfica Semanal/Mensual</h3>
         <button onclick="closeModal('modal-periodic-photo')" class="text-stone-400 font-bold cursor-pointer">✕</button>
       </div>
       <div class="space-y-3 text-xs">
-        <input type="date" id="periodic-photo-date" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
-        <select id="periodic-photo-type" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
-          <option value="Semanal" class="bg-[#2b1d3a]">Gráfica Semanal</option>
-          <option value="Mensual" class="bg-[#2b1d3a]">Gráfica Mensual</option>
+        <input type="date" id="periodic-photo-date" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
+        <select id="periodic-photo-type" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
+          <option value="Semanal" class="bg-[#382154]">Gráfica Semanal</option>
+          <option value="Mensual" class="bg-[#382154]">Gráfica Mensual</option>
         </select>
         <input type="file" id="periodic-photo-file" accept="image/*" class="w-full text-xs font-bold text-white">
-        <input type="text" id="periodic-photo-title" placeholder="Título (ej. Cierre Semana 37)..." class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
+        <input type="text" id="periodic-photo-title" placeholder="Título (ej. Cierre Semana 37)..." class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
       </div>
       <div class="pt-2 flex justify-end space-x-2">
-        <button onclick="closeModal('modal-periodic-photo')" class="px-4 py-2 border border-white/20 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
-        <button onclick="savePeriodicPhoto()" class="px-4 py-2 bg-[#b088cc] text-white rounded-xl text-xs font-black cursor-pointer">Subir Gráfica</button>
+        <button onclick="closeModal('modal-periodic-photo')" class="px-4 py-2 border border-white/25 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
+        <button onclick="savePeriodicPhoto()" class="px-4 py-2 bg-[#c49ce3] text-white rounded-xl text-xs font-black cursor-pointer">Subir Gráfica</button>
       </div>
     </div>
   </div>
@@ -461,20 +465,20 @@
   <!-- MODAL ESTUDIO -->
   <div id="modal-study" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
     <div class="glass-card-solid rounded-3xl max-w-md w-full p-6 space-y-4 border border-white/20">
-      <div class="flex items-center justify-between pb-2 border-b border-white/10">
+      <div class="flex items-center justify-between pb-2 border-b border-white/15">
         <h3 class="text-base font-black text-white">Registrar Bitácora de Estudio</h3>
         <button onclick="closeModal('modal-study')" class="text-stone-400 font-bold cursor-pointer">✕</button>
       </div>
       <div class="space-y-3 text-xs">
         <input type="hidden" id="study-edit-id">
-        <input type="date" id="study-date" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
-        <input type="text" id="study-topic" placeholder="Enfoque de estudio (ej. SB vs BU solver)..." class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
-        <textarea id="study-hands" rows="3" placeholder="Manos anotadas o spots..." class="w-full bg-black/35 border border-white/20 rounded-xl p-3 text-white"></textarea>
-        <textarea id="study-conclusion" rows="3" placeholder="Conclusión / Línea GTO correcta..." class="w-full bg-black/35 border border-white/20 rounded-xl p-3 text-white"></textarea>
+        <input type="date" id="study-date" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
+        <input type="text" id="study-topic" placeholder="Enfoque de estudio (ej. SB vs BU solver)..." class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
+        <textarea id="study-hands" rows="3" placeholder="Manos anotadas o spots..." class="w-full bg-black/40 border border-white/25 rounded-xl p-3 text-white"></textarea>
+        <textarea id="study-conclusion" rows="3" placeholder="Conclusión / Línea GTO correcta..." class="w-full bg-black/40 border border-white/25 rounded-xl p-3 text-white"></textarea>
       </div>
       <div class="pt-2 flex justify-end space-x-2">
-        <button onclick="closeModal('modal-study')" class="px-4 py-2 border border-white/20 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
-        <button onclick="saveStudyLog()" class="px-4 py-2 bg-[#b088cc] text-white rounded-xl text-xs font-black cursor-pointer">Guardar</button>
+        <button onclick="closeModal('modal-study')" class="px-4 py-2 border border-white/25 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
+        <button onclick="saveStudyLog()" class="px-4 py-2 bg-[#c49ce3] text-white rounded-xl text-xs font-black cursor-pointer">Guardar</button>
       </div>
     </div>
   </div>
@@ -482,18 +486,18 @@
   <!-- MODAL LEAK -->
   <div id="modal-leak" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
     <div class="glass-card-solid rounded-3xl max-w-sm w-full p-6 space-y-4 border border-white/20">
-      <div class="flex items-center justify-between pb-2 border-b border-white/10">
+      <div class="flex items-center justify-between pb-2 border-b border-white/15">
         <h3 class="text-base font-black text-white">Nuevo Leak / Corrección</h3>
         <button onclick="closeModal('modal-leak')" class="text-stone-400 font-bold cursor-pointer">✕</button>
       </div>
       <div class="space-y-3 text-xs">
-        <input type="text" id="leak-title" placeholder="Título (ej. Chibetando de más)..." class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
-        <input type="text" id="leak-initial" placeholder="Dato inicial PokerTracker (ej. 54%)" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
-        <textarea id="leak-action" rows="2" placeholder="Plan de acción en mesas..." class="w-full bg-black/35 border border-white/20 rounded-xl p-3 text-white"></textarea>
+        <input type="text" id="leak-title" placeholder="Título (ej. Chibetando de más)..." class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
+        <input type="text" id="leak-initial" placeholder="Dato inicial PokerTracker (ej. 54%)" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
+        <textarea id="leak-action" rows="2" placeholder="Plan de acción en mesas..." class="w-full bg-black/40 border border-white/25 rounded-xl p-3 text-white"></textarea>
       </div>
       <div class="pt-2 flex justify-end space-x-2">
-        <button onclick="closeModal('modal-leak')" class="px-4 py-2 border border-white/20 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
-        <button onclick="saveLeakItem()" class="px-4 py-2 bg-[#b088cc] text-white rounded-xl text-xs font-black cursor-pointer">Crear Leak</button>
+        <button onclick="closeModal('modal-leak')" class="px-4 py-2 border border-white/25 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
+        <button onclick="saveLeakItem()" class="px-4 py-2 bg-[#c49ce3] text-white rounded-xl text-xs font-black cursor-pointer">Crear Leak</button>
       </div>
     </div>
   </div>
@@ -501,18 +505,18 @@
   <!-- MODAL EVOLUCIÓN LEAK -->
   <div id="modal-leak-progress" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
     <div class="glass-card-solid rounded-3xl max-w-sm w-full p-6 space-y-4 border border-white/20">
-      <div class="flex items-center justify-between pb-2 border-b border-white/10">
+      <div class="flex items-center justify-between pb-2 border-b border-white/15">
         <h3 class="text-base font-black text-white">Añadir Medición de Progreso</h3>
         <button onclick="closeModal('modal-leak-progress')" class="text-stone-400 font-bold cursor-pointer">✕</button>
       </div>
       <div class="space-y-3 text-xs">
         <input type="hidden" id="progress-leak-id">
-        <input type="date" id="progress-date" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
-        <input type="text" id="progress-stat" placeholder="Nuevo valor (ej. 48% - ¡Bajando!)" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
+        <input type="date" id="progress-date" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
+        <input type="text" id="progress-stat" placeholder="Nuevo valor (ej. 48% - ¡Bajando!)" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
       </div>
       <div class="pt-2 flex justify-end space-x-2">
-        <button onclick="closeModal('modal-leak-progress')" class="px-4 py-2 border border-white/20 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
-        <button onclick="saveLeakProgress()" class="px-4 py-2 bg-[#b088cc] text-white rounded-xl text-xs font-black cursor-pointer">Registrar</button>
+        <button onclick="closeModal('modal-leak-progress')" class="px-4 py-2 border border-white/25 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
+        <button onclick="saveLeakProgress()" class="px-4 py-2 bg-[#c49ce3] text-white rounded-xl text-xs font-black cursor-pointer">Registrar</button>
       </div>
     </div>
   </div>
@@ -520,24 +524,24 @@
   <!-- MODAL TRIDENT -->
   <div id="modal-trident" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay hidden">
     <div class="glass-card-solid rounded-3xl max-w-sm w-full p-6 space-y-4 border border-white/20">
-      <div class="flex items-center justify-between pb-2 border-b border-white/10">
+      <div class="flex items-center justify-between pb-2 border-b border-white/15">
         <h3 class="text-base font-black text-white">Registrar Tridents</h3>
         <button onclick="closeModal('modal-trident')" class="text-stone-400 font-bold cursor-pointer">✕</button>
       </div>
       <div class="space-y-3 text-xs">
-        <input type="date" id="trident-date" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
-        <input type="number" id="trident-count" placeholder="Cantidad jugada" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
-        <input type="number" step="0.01" id="trident-profit" placeholder="Resultado en € / $" class="w-full bg-black/35 border border-white/20 rounded-xl px-3 py-2 font-bold text-white">
+        <input type="date" id="trident-date" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
+        <input type="number" id="trident-count" placeholder="Cantidad jugada" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
+        <input type="number" step="0.01" id="trident-profit" placeholder="Resultado en € / $" class="w-full bg-black/40 border border-white/25 rounded-xl px-3 py-2 font-bold text-white">
       </div>
       <div class="pt-2 flex justify-end space-x-2">
-        <button onclick="closeModal('modal-trident')" class="px-4 py-2 border border-white/20 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
-        <button onclick="saveTridentItem()" class="px-4 py-2 bg-[#b088cc] text-white rounded-xl text-xs font-black cursor-pointer">Guardar</button>
+        <button onclick="closeModal('modal-trident')" class="px-4 py-2 border border-white/25 rounded-xl text-xs font-bold text-white cursor-pointer">Cancelar</button>
+        <button onclick="saveTridentItem()" class="px-4 py-2 bg-[#c49ce3] text-white rounded-xl text-xs font-black cursor-pointer">Guardar</button>
       </div>
     </div>
   </div>
 
   <!-- TOAST -->
-  <div id="toast" class="fixed bottom-5 right-5 z-50 bg-[#3d2b52] text-white px-4 py-2.5 rounded-2xl shadow-2xl text-xs font-bold flex items-center space-x-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none border border-white/20">
+  <div id="toast" class="fixed bottom-5 right-5 z-50 bg-[#382154] text-white px-4 py-2.5 rounded-2xl shadow-2xl text-xs font-bold flex items-center space-x-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none border border-white/25">
     <span>✨</span>
     <span id="toast-text">Acción completada</span>
   </div>
@@ -562,7 +566,7 @@
       isCloudReady = true;
     } catch (e) { console.warn("Firebase:", e); }
 
-    const STORAGE_KEY = 'MAPKR_POKER_DATA_V11';
+    const STORAGE_KEY = 'MAPKR_POKER_DATA_V12';
 
     let appData = {
       grindSessions: [],
@@ -953,36 +957,35 @@
         <div class="glass-card p-4 rounded-2xl space-y-2">
           <div class="flex justify-between items-center text-xs font-black">
             <span class="text-stone-300">⏱️ Grind Hours</span>
-            <span class="${hPct >= 100 ? 'text-emerald-400' : 'text-[#d6b6eb]'}">${todaySession.hours} / ${gc.hours} h (${hPct}%)</span>
+            <span class="${hPct >= 100 ? 'text-emerald-400' : 'text-[#e1c5f5]'}">${todaySession.hours} / ${gc.hours} h (${hPct}%)</span>
           </div>
-          <div class="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/10">
-            <div class="bg-gradient-to-r from-[#b088cc] to-[#8c5fb8] h-full rounded-full transition-all duration-300" style="width: ${hPct}%"></div>
+          <div class="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/15">
+            <div class="bg-gradient-to-r from-[#c49ce3] to-[#9c6cc7] h-full rounded-full transition-all duration-300" style="width: ${hPct}%"></div>
           </div>
         </div>
 
         <div class="glass-card p-4 rounded-2xl space-y-2">
           <div class="flex justify-between items-center text-xs font-black">
             <span class="text-stone-300">📚 Study Hours</span>
-            <span class="${sPct >= 100 ? 'text-emerald-400' : 'text-[#d6b6eb]'}">${todaySession.studyHours} / ${gc.study} h (${sPct}%)</span>
+            <span class="${sPct >= 100 ? 'text-emerald-400' : 'text-[#e1c5f5]'}">${todaySession.studyHours} / ${gc.study} h (${sPct}%)</span>
           </div>
-          <div class="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/10">
-            <div class="bg-gradient-to-r from-[#b088cc] to-[#8c5fb8] h-full rounded-full transition-all duration-300" style="width: ${sPct}%"></div>
+          <div class="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/15">
+            <div class="bg-gradient-to-r from-[#c49ce3] to-[#9c6cc7] h-full rounded-full transition-all duration-300" style="width: ${sPct}%"></div>
           </div>
         </div>
 
         <div class="glass-card p-4 rounded-2xl space-y-2">
           <div class="flex justify-between items-center text-xs font-black">
             <span class="text-stone-300">🎮 Total Games</span>
-            <span class="${gPct >= 100 ? 'text-emerald-400' : 'text-[#d6b6eb]'}">${todaySession.games} / ${gc.games} (${gPct}%)</span>
+            <span class="${gPct >= 100 ? 'text-emerald-400' : 'text-[#e1c5f5]'}">${todaySession.games} / ${gc.games} (${gPct}%)</span>
           </div>
-          <div class="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/10">
-            <div class="bg-gradient-to-r from-[#b088cc] to-[#8c5fb8] h-full rounded-full transition-all duration-300" style="width: ${gPct}%"></div>
+          <div class="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/15">
+            <div class="bg-gradient-to-r from-[#c49ce3] to-[#9c6cc7] h-full rounded-full transition-all duration-300" style="width: ${gPct}%"></div>
           </div>
         </div>
       `;
     }
 
-    // HABIT TRACKER VISUAL (L-M-X-J-V-S-D) + BARRA AUTOMÁTICA
     function renderCustomGoalsAutoProgress() {
       const container = document.getElementById('custom-goals-container');
       const empty = document.getElementById('custom-goals-empty');
@@ -993,7 +996,6 @@
 
       const currDate = new Date(currentDate + 'T00:00:00');
       
-      // Últimos 7 días para el habit tracker visual
       const weekDays = [];
       for (let i = 6; i >= 0; i--) {
         const d = new Date(currDate);
@@ -1009,7 +1011,6 @@
       appData.customGoals.forEach(g => {
         let accumulated = 0;
 
-        // Calcular cumplimiento diario de la semana para el tracker visual
         let trackerDaysHtml = '';
         weekDays.forEach(w => {
           const daySession = appData.grindSessions.find(s => s.date === w.dateStr) || { hours: 0, studyHours: 0, games: 0 };
@@ -1022,14 +1023,13 @@
 
           trackerDaysHtml += `
             <div class="flex flex-col items-center">
-              <span class="text-[9px] font-extrabold text-stone-400 mb-1">${w.dayName}</span>
-              <div class="w-7 h-7 rounded-xl border flex items-center justify-center text-xs ${fulfilled ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300 font-black' : 'bg-black/30 border-white/10 text-stone-600'}" title="${w.dateStr}">
+              <span class="text-[9px] font-extrabold text-stone-300 mb-1">${w.dayName}</span>
+              <div class="w-7 h-7 rounded-xl border flex items-center justify-center text-xs ${fulfilled ? 'bg-emerald-500/20 border-emerald-500/60 text-emerald-300 font-black' : 'bg-black/30 border-white/15 text-stone-500'}" title="${w.dateStr}">
                 ${fulfilled ? '✓' : '·'}
               </div>
             </div>`;
         });
 
-        // Cálculo acumulado del periodo
         appData.grindSessions.forEach(s => {
           const sDate = new Date(s.date + 'T00:00:00');
           let inRange = false;
@@ -1068,7 +1068,7 @@
           <div class="glass-card p-4 rounded-2xl space-y-3">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
               <div>
-                <span class="text-[9px] font-black bg-white/10 px-2 py-0.5 rounded-md text-[#d6b6eb] uppercase border border-white/10">${g.frequency}</span>
+                <span class="text-[9px] font-black bg-white/10 px-2 py-0.5 rounded-md text-[#e1c5f5] uppercase border border-white/15">${g.frequency}</span>
                 <h4 class="font-black text-white text-sm mt-1">${g.title}</h4>
               </div>
               <div class="flex items-center space-x-2">
@@ -1078,11 +1078,11 @@
             </div>
             <div class="space-y-1">
               <div class="flex justify-between items-center text-xs font-black">
-                <span class="text-stone-400">Progreso Automático</span>
-                <span class="${pct >= 100 ? 'text-emerald-400' : 'text-[#d6b6eb]'}">${accumulated.toFixed(1)}${unitLabel} / ${target}${unitLabel} (${pct}%)</span>
+                <span class="text-stone-300">Progreso Automático</span>
+                <span class="${pct >= 100 ? 'text-emerald-400' : 'text-[#e1c5f5]'}">${accumulated.toFixed(1)}${unitLabel} / ${target}${unitLabel} (${pct}%)</span>
               </div>
-              <div class="w-full bg-black/40 h-2.5 rounded-full overflow-hidden border border-white/10">
-                <div class="bg-gradient-to-r from-[#b088cc] to-[#8c5fb8] h-full rounded-full transition-all duration-300" style="width: ${pct}%"></div>
+              <div class="w-full bg-black/40 h-2.5 rounded-full overflow-hidden border border-white/15">
+                <div class="bg-gradient-to-r from-[#c49ce3] to-[#9c6cc7] h-full rounded-full transition-all duration-300" style="width: ${pct}%"></div>
               </div>
             </div>
           </div>`;
@@ -1097,35 +1097,35 @@
       if (!session) {
         container.innerHTML = `
           <div class="col-span-2 glass-card rounded-3xl p-8 text-center space-y-3">
-            <p class="text-stone-400 text-xs font-bold">No hay sesión registrada para esta fecha (${currentDate}).</p>
-            <button onclick="openModalGrind()" class="px-5 py-2.5 bg-gradient-to-r from-[#b088cc] to-[#8c5fb8] text-white rounded-xl text-xs font-black shadow-lg cursor-pointer">+ Registrar Sesión, Ritual y Gráfica</button>
+            <p class="text-stone-300 text-xs font-bold">No hay sesión registrada para esta fecha (${currentDate}).</p>
+            <button onclick="openModalGrind()" class="px-5 py-2.5 bg-gradient-to-r from-[#c49ce3] to-[#9c6cc7] text-white rounded-xl text-xs font-black shadow-lg cursor-pointer">+ Registrar Sesión, Ritual y Gráfica</button>
           </div>`;
         return;
       }
 
-      let imgHtml = session.imageUrl ? `<div class="mt-3"><p class="text-[11px] font-bold text-stone-400 mb-1">📸 Gráfica adjunta:</p><img src="${session.imageUrl}" class="w-full h-40 object-cover rounded-xl border border-white/20"></div>` : '';
+      let imgHtml = session.imageUrl ? `<div class="mt-3"><p class="text-[11px] font-bold text-stone-300 mb-1">📸 Gráfica adjunta:</p><img src="${session.imageUrl}" class="w-full h-40 object-cover rounded-xl border border-white/20"></div>` : '';
 
       container.innerHTML = `
         <div class="glass-card-solid rounded-3xl p-6 space-y-4">
-          <div class="flex items-center justify-between pb-3 border-b border-white/10">
+          <div class="flex items-center justify-between pb-3 border-b border-white/15">
             <h3 class="text-base font-black text-white">☀️ Warm-up Registrado</h3>
-            <button onclick="openModalGrind()" class="text-xs font-bold text-[#d6b6eb] hover:underline">✏️ Editar</button>
+            <button onclick="openModalGrind()" class="text-xs font-bold text-[#e1c5f5] hover:underline">✏️ Editar</button>
           </div>
-          <div class="space-y-2 text-xs text-stone-300 font-bold">
+          <div class="space-y-2 text-xs text-stone-200 font-bold">
             <p>${session.wuEnv ? '✅' : '❌'} Espacio ordenado y programas abiertos</p>
             <p>${session.wuMind ? '✅' : '❌'} Activación realizada (respiración / meditación)</p>
-            <p>⚡ Energía inicial: <span class="text-[#d6b6eb]">${session.wuEnergy}/10</span> | Enfoque: <span class="text-[#d6b6eb]">${session.wuFocus}/10</span></p>
-            <p class="font-normal italic text-stone-400">🎯 Intención: "${session.wuIntention || 'Ninguna'}"</p>
+            <p>⚡ Energía inicial: <span class="text-[#e1c5f5]">${session.wuEnergy}/10</span> | Enfoque: <span class="text-[#e1c5f5]">${session.wuFocus}/10</span></p>
+            <p class="font-normal italic text-stone-300">🎯 Intención: "${session.wuIntention || 'Ninguna'}"</p>
           </div>
           ${imgHtml}
         </div>
 
         <div class="glass-card-solid rounded-3xl p-6 space-y-4">
-          <div class="flex items-center justify-between pb-3 border-b border-white/10">
+          <div class="flex items-center justify-between pb-3 border-b border-white/15">
             <h3 class="text-base font-black text-white">🌙 Cool-down & Cierre</h3>
-            <button onclick="openModalGrind()" class="text-xs font-bold text-[#d6b6eb] hover:underline">✏️ Editar</button>
+            <button onclick="openModalGrind()" class="text-xs font-bold text-[#e1c5f5] hover:underline">✏️ Editar</button>
           </div>
-          <div class="space-y-2 text-xs text-stone-300">
+          <div class="space-y-2 text-xs text-stone-200">
             <p><strong>Sensaciones:</strong> ${session.cdSensations || 'Sin registrar'}</p>
             <p><strong>Alertas de tilt/fatiga:</strong> ${session.cdTilt || 'Ninguna'}</p>
             <p><strong>Ganancias / EV:</strong> ${session.notes || 'Sin registrar'}</p>
@@ -1149,7 +1149,7 @@
               ${thumb}
               <div>
                 <strong class="text-sm font-black text-white">📅 ${s.date}</strong>
-                <p class="text-stone-300 mt-1">🎮 ${s.games} games | ⏱️ Grind: ${s.hours}h | 📚 Estudio: ${s.studyHours}h | 📈 cEV: ${s.cev}</p>
+                <p class="text-stone-200 mt-1">🎮 ${s.games} games | ⏱️ Grind: ${s.hours}h | 📚 Estudio: ${s.studyHours}h | 📈 cEV: ${s.cev}</p>
               </div>
             </div>
             <div class="flex items-center gap-2">
@@ -1171,10 +1171,10 @@
       [...appData.periodicPhotos].sort((a,b) => b.date.localeCompare(a.date)).forEach(p => {
         gallery.innerHTML += `
           <div class="glass-card rounded-2xl p-2.5 space-y-2 relative">
-            <span class="absolute top-4 left-4 bg-[#b088cc] text-white text-[9px] font-black px-2 py-0.5 rounded-md uppercase">${p.type}</span>
+            <span class="absolute top-4 left-4 bg-[#c49ce3] text-white text-[9px] font-black px-2 py-0.5 rounded-md uppercase">${p.type}</span>
             <img src="${p.dataUrl}" class="w-full h-32 object-cover rounded-xl border border-white/20">
             <div class="flex justify-between items-center text-xs">
-              <div><p class="font-black text-white truncate">${p.title}</p><p class="text-[10px] text-stone-400">${p.date}</p></div>
+              <div><p class="font-black text-white truncate">${p.title}</p><p class="text-[10px] text-stone-300">${p.date}</p></div>
               <button onclick="deletePeriodicPhoto(${p.id})" class="text-red-400 font-bold">✕</button>
             </div>
           </div>`;
@@ -1196,8 +1196,8 @@
               <strong class="text-sm font-black text-white">📚 ${l.date} · ${l.topic}</strong>
               <button onclick="deleteStudyLog(${l.id})" class="text-red-400 font-bold">✕ Borrar</button>
             </div>
-            <p class="text-stone-300"><strong>Manos / Spots:</strong> ${l.hands || 'N/A'}</p>
-            <p class="text-[#d6b6eb] font-bold"><strong>Conclusión GTO:</strong> ${l.conclusion || 'N/A'}</p>
+            <p class="text-stone-200"><strong>Manos / Spots:</strong> ${l.hands || 'N/A'}</p>
+            <p class="text-[#e1c5f5] font-bold"><strong>Conclusión GTO:</strong> ${l.conclusion || 'N/A'}</p>
           </div>`;
       });
     }
@@ -1211,20 +1211,20 @@
       empty?.classList.add('hidden');
 
       appData.leaks.forEach(leak => {
-        let progHtml = leak.progress.map(p => `<span class="bg-black/30 px-2 py-1 rounded-lg border border-white/10 text-[11px] font-bold text-stone-200">📅 ${p.date}: ${p.stat}</span>`).join('');
+        let progHtml = leak.progress.map(p => `<span class="bg-black/35 px-2 py-1 rounded-lg border border-white/15 text-[11px] font-bold text-stone-100">📅 ${p.date}: ${p.stat}</span>`).join('');
         container.innerHTML += `
           <div class="p-5 glass-card-solid rounded-3xl space-y-3">
             <div class="flex justify-between items-center">
               <h4 class="font-black text-white text-sm">🎯 ${leak.title}</h4>
               <button onclick="deleteLeak(${leak.id})" class="text-stone-400 hover:text-red-400 font-bold">✕</button>
             </div>
-            <p class="text-xs text-stone-300"><strong>Plan:</strong> ${leak.action}</p>
+            <p class="text-xs text-stone-200"><strong>Plan:</strong> ${leak.action}</p>
             <div class="glass-card p-3 rounded-2xl space-y-2">
-              <p class="text-[11px] font-extrabold text-stone-400 uppercase">Evolución de Estadísticas:</p>
+              <p class="text-[11px] font-extrabold text-stone-300 uppercase">Evolución de Estadísticas:</p>
               <div class="flex flex-wrap gap-2">${progHtml}</div>
             </div>
             <div class="flex justify-between items-center pt-2">
-              <button onclick="openModalLeakProgress(${leak.id})" class="px-3 py-1.5 bg-[#b088cc] text-white rounded-xl text-xs font-bold shadow-lg">+ Registrar Medición</button>
+              <button onclick="openModalLeakProgress(${leak.id})" class="px-3 py-1.5 bg-[#c49ce3] text-white rounded-xl text-xs font-bold shadow-lg">+ Registrar Medición</button>
             </div>
           </div>`;
       });
