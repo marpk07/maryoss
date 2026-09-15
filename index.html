@@ -46,7 +46,7 @@
       <div class="flex items-center space-x-3">
         <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#F7D9E0] to-[#C6B7CC] flex items-center justify-center font-black text-[#4E3E52] text-base shadow-lg">MK</div>
         <div>
-          <h1 class="text-base font-black tracking-wider uppercase text-white leading-none">MAPKR</h1>
+          <h1 class="text-base font-black tracking-wider uppercase text-white leading-none">MARPK</h1>
           <span class="text-[10px] font-bold text-[#F7D9E0] tracking-widest uppercase">Professional Poker Performance</span>
         </div>
       </div>
@@ -528,7 +528,7 @@
       isCloudReady = true;
     } catch (e) { console.warn("Firebase:", e); }
 
-    const STORAGE_KEY = 'MAPKR_POKER_DATA_V10';
+    const STORAGE_KEY = 'MARPK_POKER_DATA_V10';
 
     let appData = {
       grindSessions: [],
@@ -565,7 +565,7 @@
     async function loadDatabase() {
       try {
         if (isCloudReady && db) {
-          const doc = await db.collection("mapkr").doc("poker_data").get();
+          const doc = await db.collection("marpk").doc("poker_data").get();
           if (doc.exists) {
             appData = Object.assign({}, appData, doc.data());
             localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
@@ -595,7 +595,7 @@
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
         if (isCloudReady && db) {
-          db.collection("mapkr").doc("poker_data").set(appData).catch(e => console.warn(e));
+          db.collection("marpk").doc("poker_data").set(appData).catch(e => console.warn(e));
         }
       } catch (e) { console.error(e); }
     }
