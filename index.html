@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MAPKR · Professional Poker Dashboard</title>
+  <title>MARPK · Professional Poker Dashboard</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -528,7 +528,7 @@
       isCloudReady = true;
     } catch (e) { console.warn("Firebase:", e); }
 
-    const STORAGE_KEY = 'MAPKR_POKER_DATA_V9';
+    const STORAGE_KEY = 'MAPKR_POKER_DATA_V10';
 
     let appData = {
       grindSessions: [],
@@ -548,8 +548,7 @@
       return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
     }
 
-    function initApp() {
-      loadDatabase();
+    async function initApp() {
       currentDate = getTodayString();
       document.getElementById('global-date').value = currentDate;
       
@@ -557,15 +556,38 @@
       document.getElementById('report-from').value = thirtyDaysAgo.toISOString().slice(0,10);
       document.getElementById('report-to').value = currentDate;
 
+      // Cargar datos desde Firebase o LocalStorage
+      await loadDatabase();
+
       renderAllViews();
     }
 
-    function loadDatabase() {
+    async function loadDatabase() {
+      try {
+        if (isCloudReady && db) {
+          const doc = await db.collection("mapkr").doc("poker_data").get();
+          if (doc.exists) {
+            appData = Object.assign({}, appData, doc.data());
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+          } else {
+            loadDatabaseLocal();
+          }
+        } else {
+          loadDatabaseLocal();
+        }
+      } catch (e) {
+        console.warn("Error cargando de la nube:", e);
+        loadDatabaseLocal();
+      }
+
+      if (!Array.isArray(appData.periodicPhotos)) appData.periodicPhotos = [];
+      if (!Array.isArray(appData.customGoals)) appData.customGoals = [];
+    }
+
+    function loadDatabaseLocal() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) appData = Object.assign({}, appData, JSON.parse(raw));
-        if (!Array.isArray(appData.periodicPhotos)) appData.periodicPhotos = [];
-        if (!Array.isArray(appData.customGoals)) appData.customGoals = [];
       } catch (e) { console.warn(e); }
     }
 
