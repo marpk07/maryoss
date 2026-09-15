@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MAPKR · Professional Poker Dashboard</title>
+  <title>MARPK · Professional Poker Dashboard</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -78,29 +78,31 @@
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-[#f7d9e0] selection:text-[#3b3238]">
 
-  <!-- HEADER & TOP NAVIGATION -->
-  <header class="glass-card-solid sticky top-0 z-40 border-b border-[#e8d2dc]">
+  <!-- HEADER LILA ELEGANTE CON FRASE MOTIVACIONAL -->
+  <header class="bg-[#5E4B6E] text-white sticky top-0 z-40 shadow-xl border-b border-[#7B658D]">
     <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#c97b84] to-[#c6b7cc] flex items-center justify-center font-black text-white text-base shadow-lg">♠️</div>
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#c97b84] to-[#c6b7cc] flex items-center justify-center font-black text-white text-lg shadow-lg">♠️</div>
         <div>
-          <h1 class="text-base font-black tracking-wider uppercase text-stone-800 leading-none">MAPKR <span class="text-[#c97b84]">♠️♥♣♦</span></h1>
-          <span class="text-[10px] font-bold text-stone-500 tracking-widest uppercase">Professional Poker Performance</span>
+          <h1 class="text-base font-black tracking-wider uppercase text-white leading-none flex items-center gap-2">
+            MARPK <span class="text-[#f7d9e0] text-xs font-bold">♠️ ♥️ ♣️ ♦️</span>
+          </h1>
+          <p class="text-[11px] font-medium text-[#f0e4eb] italic mt-0.5">"- No elijo las cartas, pero sí cómo jugarlas."</p>
         </div>
       </div>
 
-      <nav class="flex flex-wrap items-center justify-center gap-1.5 bg-[#f5ecf0] p-1.5 rounded-2xl border border-[#e8d2dc]">
-        <button onclick="switchTab('resumen')" id="tab-btn-resumen" class="nav-btn active px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-600 hover:text-stone-900">📊 Resumen & Ritual</button>
-        <button onclick="switchTab('grind')" id="tab-btn-grind" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-600 hover:text-stone-900">🃏 Sesiones</button>
-        <button onclick="switchTab('estudio')" id="tab-btn-estudio" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-600 hover:text-stone-900">📚 Estudio & Manos</button>
-        <button onclick="switchTab('leaks')" id="tab-btn-leaks" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-600 hover:text-stone-900">🎯 Leaks & Tracking</button>
-        <button onclick="switchTab('tridents')" id="tab-btn-tridents" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-600 hover:text-stone-900">⚡ Tridents</button>
-        <button onclick="switchTab('reportes')" id="tab-btn-reportes" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-600 hover:text-stone-900">📈 Reportes & Gráficas</button>
+      <nav class="flex flex-wrap items-center justify-center gap-1.5 bg-[#4D3B5C] p-1.5 rounded-2xl border border-[#6D587E]">
+        <button onclick="switchTab('resumen')" id="tab-btn-resumen" class="nav-btn active px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-200 hover:text-white">📊 Resumen & Ritual</button>
+        <button onclick="switchTab('grind')" id="tab-btn-grind" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-200 hover:text-white">🃏 Sesiones</button>
+        <button onclick="switchTab('estudio')" id="tab-btn-estudio" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-200 hover:text-white">📚 Estudio & Manos</button>
+        <button onclick="switchTab('leaks')" id="tab-btn-leaks" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-200 hover:text-white">🎯 Leaks & Tracking</button>
+        <button onclick="switchTab('tridents')" id="tab-btn-tridents" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-200 hover:text-white">⚡ Tridents</button>
+        <button onclick="switchTab('reportes')" id="tab-btn-reportes" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs text-stone-200 hover:text-white">📈 Reportes & Gráficas</button>
       </nav>
 
       <div class="flex items-center space-x-2">
-        <span id="cloud-badge" class="text-[9px] font-extrabold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">☁️ Sincronizado</span>
-        <button onclick="downloadBackup()" class="p-2 rounded-xl bg-[#f5ecf0] text-stone-700 hover:text-stone-900 text-xs font-bold border border-[#e8d2dc]" title="Backup JSON">💾</button>
+        <span id="cloud-badge" class="text-[9px] font-extrabold px-2.5 py-1 rounded-full bg-emerald-900/80 text-emerald-200 border border-emerald-700">☁️ Sincronizado</span>
+        <button onclick="downloadBackup()" class="p-2 rounded-xl bg-[#4D3B5C] text-stone-200 hover:text-white text-xs font-bold border border-[#6D587E]" title="Backup JSON">💾</button>
       </div>
     </div>
   </header>
@@ -119,7 +121,7 @@
       </div>
     </div>
 
-    <!-- PANE 1: RESUMEN & RITUAL (IDEAL PARA CAPTURA) -->
+    <!-- PANE 1: RESUMEN & RITUAL -->
     <section id="pane-resumen" class="tab-pane space-y-6">
       
       <!-- ESTADO DE METAS DE PÓKER -->
@@ -134,7 +136,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="daily-goals-progress"></div>
       </div>
 
-      <!-- HÁBITOS & METAS CON HABIT TRACKER VISUAL (INICIA EN LUNES) -->
+      <!-- HÁBITOS & METAS CON HABIT TRACKER VISUAL (LUNES A DOMINGO) -->
       <div class="glass-card-solid rounded-3xl p-6 space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#e8d2dc]">
           <div>
@@ -566,7 +568,7 @@
       isCloudReady = true;
     } catch (e) { console.warn("Firebase:", e); }
 
-    const STORAGE_KEY = 'MAPKR_POKER_DATA_V13';
+    const STORAGE_KEY = 'MARPK_POKER_DATA_V14';
 
     let appData = {
       grindSessions: [],
@@ -996,7 +998,7 @@
 
       const currDate = new Date(currentDate + 'T00:00:00');
       
-      // Generar 7 días de Lunes a Domingo
+      // Generar 7 días de Lunes a Domingo (L, M, X, J, V, S, D)
       const weekDays = [];
       for (let i = 6; i >= 0; i--) {
         const d = new Date(currDate);
@@ -1006,13 +1008,10 @@
         const dd = String(d.getDate()).padStart(2, '0');
         const dateStr = `${yyyy}-${mm}-${dd}`;
         
-        // Mapear de Lunes (0) a Domingo (6)
-        const dayIdx = (d.getDay() + 6) % 7;
+        const dayIdx = (d.getDay() + 6) % 7; // Lunes = 0, Domingo = 6
         const dayName = ['L', 'M', 'X', 'J', 'V', 'S', 'D'][dayIdx];
         weekDays.push({ dateStr, dayName, rawDay: dayIdx });
       }
-      
-      // Ordenar estrictamente de Lunes a Domingo
       weekDays.sort((a, b) => a.rawDay - b.rawDay);
 
       appData.customGoals.forEach(g => {
@@ -1279,7 +1278,7 @@
       const games = document.getElementById('kpi-total-games').innerText;
       const cev = document.getElementById('kpi-avg-cev').innerText;
 
-      const report = `♠️ *REPORTE MAPKR (${from} al ${to})* ♠️\n\n` +
+      const report = `♠️ *REPORTE MARPK (${from} al ${to})* ♠️\n\n` +
         `⏱️ Horas de Grind: ${gH}\n` +
         `📚 Horas de Estudio: ${sH}\n` +
         `🎮 Total Games: ${games}\n` +
