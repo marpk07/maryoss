@@ -662,11 +662,23 @@
       try {
         appData._updatedAt = Date.now();
         localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+        
         if (isCloudReady && db) {
-          db.collection("mapkr").doc("poker_data").set(appData)
+          // Creamos una copia limpia para la nube sin las imágenes pesadas (Base64)
+          // para garantizar que NUNCA rebase el límite de 1MB de Firestore y sincronice al instante.
+          const cloudPayload = {
+            ...appData,
+            grindSessions: appData.grindSessions.map(s => ({ ...s, imageUrl: '' })),
+            periodicPhotos: [] // Las fotos pesadas se quedan en el almacenamiento local del dispositivo
+          };
+
+          db.collection("mapkr").doc("poker_data").set(cloudPayload)
+            .then(() => {
+              showToast('☁️ ¡Sincronizado con la nube con éxito!');
+            })
             .catch(e => {
               console.error("Error guardando en la nube:", e);
-              showToast('⚠️ No se pudo guardar en la nube. Quedó guardado solo en este dispositivo.');
+              showToast('⚠️ Guardado localmente (revisa conexión).');
             });
         }
       } catch (e) { console.error(e); }
