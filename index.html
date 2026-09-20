@@ -583,7 +583,8 @@
       tridents: [],
       periodicPhotos: [],
       customGoals: [],
-      goalsConfig: { hours: 4.0, study: 1.0, games: 85 }
+      goalsConfig: { hours: 4.0, study: 1.0, games: 85 },
+      _updatedAt: 0
     };
 
     let activeTabId = 'resumen';
@@ -606,22 +607,44 @@
       renderAllViews();
     }
 
+    // === SINCRONIZACIÓN NUBE/LOCAL ===
+    // Antes: la nube SIEMPRE sobrescribía lo local al recargar la página, incluso si
+    // el último guardado en la nube no había terminado de subir (por conexión lenta,
+    // documento muy pesado por las imágenes en base64, etc.). Eso borraba días
+    // recién agregados. Ahora comparamos fechas de actualización (_updatedAt) y
+    // nunca dejamos que una copia vieja de la nube destruya datos locales más nuevos.
     async function loadDatabase() {
+      // Cargamos primero lo local para tener un punto de referencia confiable
+      loadDatabaseLocal();
+      const localTimestamp = appData._updatedAt || 0;
+
       try {
         if (isCloudReady && db) {
           const doc = await db.collection("mapkr").doc("poker_data").get();
           if (doc.exists) {
-            appData = Object.assign({}, appData, doc.data());
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
-          } else {
-            loadDatabaseLocal();
+            const cloudData = doc.data();
+            const cloudTimestamp = cloudData._updatedAt || 0;
+
+            if (cloudTimestamp >= localTimestamp) {
+              // La nube tiene la versión más reciente (o igual): la adoptamos
+              appData = Object.assign({}, appData, cloudData);
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+            } else {
+              // Lo local es más nuevo que la nube: NO lo pisamos.
+              // Probablemente un guardado anterior no llegó a subirse. Reintentamos subirlo.
+              console.warn("Datos locales más recientes que la nube. Reintentando subir...");
+              db.collection("mapkr").doc("poker_data").set(appData)
+                .then(() => showToast('☁️ Se recuperaron y sincronizaron datos pendientes'))
+                .catch(e => {
+                  console.error("No se pudo resubir a la nube:", e);
+                  showToast('⚠️ Hay cambios sin sincronizar con la nube (revisa conexión o imágenes muy pesadas)');
+                });
+            }
           }
-        } else {
-          loadDatabaseLocal();
+          // Si el documento no existe aún en la nube, nos quedamos con lo local (ya cargado arriba).
         }
       } catch (e) {
-        console.warn("Error cargando de la nube:", e);
-        loadDatabaseLocal();
+        console.warn("Error consultando la nube, se mantienen los datos locales:", e);
       }
 
       if (!Array.isArray(appData.periodicPhotos)) appData.periodicPhotos = [];
@@ -637,9 +660,14 @@
 
     function saveDatabase() {
       try {
+        appData._updatedAt = Date.now();
         localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
         if (isCloudReady && db) {
-          db.collection("mapkr").doc("poker_data").set(appData).catch(e => console.warn(e));
+          db.collection("mapkr").doc("poker_data").set(appData)
+            .catch(e => {
+              console.error("Error guardando en la nube:", e);
+              showToast('⚠️ No se pudo guardar en la nube. Quedó guardado solo en este dispositivo.');
+            });
         }
       } catch (e) { console.error(e); }
     }
@@ -1297,3 +1325,4 @@
   </script>
 </body>
 </html>
+
